@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>leaflet地图</title>
+		<link rel="stylesheet" type="text/css" href="css/basic/bootstrap.min.css" /> 
+	    <link rel="stylesheet" type="text/css" href="css/basic/swiper.min.css" />
+	    <link rel="stylesheet" href="css/basic/leaflet.css" />
+	    <link rel="stylesheet" href="css/basic/iconLayers.css" />
+	    
+	    <link rel="stylesheet" href="plugins/L.Control.BoxZoom/leaflet-control-boxzoom.css" />
+	    <link rel="stylesheet" href="plugins/L.Control.DefaultExtent/leaflet.defaultextent.css" />
+	    <link rel="stylesheet" href="plugins/L.Control.FullScreen/leaflet.fullscreen.css" />
+	    
+	    <script src="js/basic/jquery-2.2.4.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/basic/leaflet.js"></script>
+		<script src="js/leafletPlugins/leaflet.ChineseTmsProviders.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/leafletPlugins/provider.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/leafletPlugins/iconLayers.js" type="text/javascript" charset="utf-8"></script>
+		
+		<script src="plugins/L.Control.BoxZoom/leaflet-control-boxzoom.js" type="text/javascript" charset="utf-8"></script>
+		<script src="plugins/L.Control.DefaultExtent/leaflet.defaultextent.js" type="text/javascript" charset="utf-8"></script>
+		<script src="plugins/L.Control.FullScreen/Leaflet.fullscreen.min.js" type="text/javascript" charset="utf-8"></script>
+		
+		<script src="js/leafletPlugins/coordtransforms.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/Hykj/transObjs.js" type="text/javascript" charset="utf-8"></script>
+		
+		<script src="js/Hykj/Hykj_TrackLineLayer.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/Hykj/Hykj_TrackLineClass.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/TestLayerControl.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			#map { height: 800px; }
+		</style>
+	</head>
+	<body">
+		<div id="map"></div>
+	</body>
+	<script type="text/javascript">
+		LeafletMap.InitMap();
+		<!--LeafletMap.ShowTrackLineLyr(1);-->
+	</script>
+</html>
