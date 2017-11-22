@@ -4,13 +4,16 @@ var PointInfoClass = {
 		var x = lon;
 		var y = lat;
 		var value = eValue;
-		pointInfo.X = function(){
+		pointInfo.getX = function(){
 			return x;
-		};
-		pointInfo.Y = function(){
+		}
+		pointInfo.X = lon;
+		pointInfo.Y = lat;
+		pointInfo.Value = eValue;
+		pointInfo.getY = function(){
 			return y;
-		};
-		pointInfo.Value = function(){
+		}
+		pointInfo.getValue = function(){
 			return value;
 		}
 		pointInfo.Equals = function(pntOther){
@@ -28,6 +31,7 @@ var PolygonInfoClass = {
 	createNew:function(value){
 		var polygonInfo = {};
 		var colorValue = value;
+		polygonInfo.Color = value;
 		var listPolygonVertrix = new Array();
 		polygonInfo.ColorValue = function(){
 			return colorValue;
@@ -36,9 +40,9 @@ var PolygonInfoClass = {
 			return listPolygonVertrix;
 		};
 		polygonInfo.AddPoint= function(pnt){  
-			if(pnt instanceof PointInfoClass){
+			//if(pnt instanceof PointInfoClass){
 				listPolygonVertrix.push(pnt);
-			}
+			//}
 		};
 		return polygonInfo;
 	}
