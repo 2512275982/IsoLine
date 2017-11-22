@@ -1,29 +1,44 @@
-var PointInfoClass = {
-	createNew:function(lon,lat,eValue){
-		var pointInfo = {};
-		var x = lon;
-		var y = lat;
-		var value = eValue;
-		pointInfo.getX = function(){
-			return x;
-		}
-		pointInfo.X = lon;
-		pointInfo.Y = lat;
-		pointInfo.Value = eValue;
-		pointInfo.getY = function(){
-			return y;
-		}
-		pointInfo.getValue = function(){
-			return value;
-		}
-		pointInfo.Equals = function(pntOther){
-			if(pntOther instanceof PointInfoClass){
-				return pntOther.X === pointInfo.X && pntOther.Y === pointInfo.Y;
-			}
-		};
-		return pointInfo;
+/*
+ * 定义使用点对象，并定义一个公共函数，用于判断点位置是否一致
+ * Javascript规定，每一个构造函数都有一个prototype属性，指向另一个对象。
+ */
+function PointInfo(lon,lat,eValue){
+	this.X = lon;
+	this.Y = lat;
+	this.Z = eValue;
+}
+PointInfo.prototype.Equals = function(pntOther){
+	if(pntOther instanceof PointInfo){
+		return pntOther.X === pointInfo.X && pntOther.Y === pointInfo.Y;
 	}
 };
+
+//var PointInfoClass = {
+//	createNew:function(lon,lat,eValue){
+//		var pointInfo = {};
+//		var x = lon;
+//		var y = lat;
+//		var value = eValue;
+//		pointInfo.getX = function(){
+//			return x;
+//		}
+//		pointInfo.X = lon;
+//		pointInfo.Y = lat;
+//		pointInfo.Value = eValue;
+//		pointInfo.getY = function(){
+//			return y;
+//		}
+//		pointInfo.getValue = function(){
+//			return value;
+//		}
+//		pointInfo.Equals = function(pntOther){
+//			if(pntOther instanceof PointInfoClass){
+//				return pntOther.X === pointInfo.X && pntOther.Y === pointInfo.Y;
+//			}
+//		};
+//		return pointInfo;
+//	}
+//};
 /*
  * 目前只支持简单多边形，不支持多环多边形
  */
