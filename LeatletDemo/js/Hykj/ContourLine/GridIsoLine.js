@@ -15,7 +15,7 @@ var GridIsoline = {
 			listIsolines.splice(0, listIsolines.length); //清空数组
 			for(var i = 0; i < listContourValues.length; i++) {
 				GetIsolines(listContourValues[i]);
-				
+				MergeIsolines();
 			}
 			
 			return listIsolines;
@@ -235,14 +235,73 @@ var GridIsoline = {
 				var line = listIsolines[i];
 				if(line.FinishState)
 					continue;
-				
+				if(MergeLine(line,i)){
+					listIsolines.splice(i,1);
+					i=0;
+					alert(listIsolines.length);
+				}
 			}
 		}
 		
-		var MergeLine = function(line){
+		var MergeLine = function(line,index){
 			for(var i = 0;i < listIsolines.length; i++){
+				if(i === index)
+					continue;
 				var lineM = listIsolines[i];
+				var pntMFrom = lineM.GetLineFrom();
+				var pntMEnd = lineM.GetLineEnd();
 				
+				var pntFrom = line.GetLineFrom();
+				var pntEnd = line.GetLineEnd();
+				
+				var isMerge = true;
+				if(pntMFrom.Equals(pntFrom) && pntMEnd.Equals(pntEnd)){  //首尾相接
+					lineM.ListVertrix = lineM.ListVertrix.concat(line.ListVertrix.reverse());
+					lineM.FinishState = true;
+					return true;
+				}
+				else if(pntMFrom.Equals(pntEnd) && pntMEnd.Equals(pntFrom)){  //首尾相接
+					lineM.ListVertrix = lineM.ListVertrix.concat(line.ListVertrix);
+					lineM.FinishState = true;
+					return true;
+				}
+				else if(pntMFrom.Equals(pntFrom)){
+					lineM.ListVertrix = lineM.ListVertrix.reverse().concat(line.ListVertrix);
+					if(pntMEnd.IsEdge && pntEnd.IsEdge)
+					{
+						lineM.FinishState = true;
+					}
+					lineM.LineType = (lineM.LineType || line.LineType);
+					return true;
+				}
+				else if(pntMFrom.Equals(pntEnd)){
+					lineM.ListVertrix = line.ListVertrix.concat(lineM.ListVertrix);
+					if(pntMEnd.IsEdge && pntFrom.IsEdge)
+					{
+						lineM.FinishState = true;
+					}
+					lineM.LineType = (lineM.LineType || line.LineType);
+					return true;
+				}
+				else if(pntMEnd.Equals(pntFrom)){
+					lineM.ListVertrix = lineM.ListVertrix.concat(line.ListVertrix);
+					if(pntMFrom.IsEdge && pntEnd.IsEdge)
+					{
+						lineM.FinishState = true;
+					}
+					lineM.LineType = (lineM.LineType || line.LineType);
+					return true;
+				}
+				else if(pntMEnd.Equals(pntEnd)){
+					lineM.ListVertrix = lineM.ListVertrix.concat(line.ListVertrix.reverse());
+					if(pntMFrom.IsEdge && pntFrom.IsEdge){
+						lineM.FinishState = true;
+					}
+					lineM.LineType = (lineM.LineType || line.LineType);
+					return true;
+				}
+				else 
+					return false;
 			}
 		}
 		

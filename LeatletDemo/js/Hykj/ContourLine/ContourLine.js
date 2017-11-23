@@ -27,7 +27,7 @@ var ContourLine = {
 			})
 			
 			var lines = GridIsoline.createNew(gridInfo);
-			var lineResults = lines.WikiIsoline([12]);
+			var lineResults = lines.WikiIsoline([10]);
 			
 			var finishCount = 0;
 			for(var i=0;i<lineResults.length;i++) {

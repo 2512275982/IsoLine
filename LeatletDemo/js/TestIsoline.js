@@ -52,23 +52,23 @@ var LeafletMap = (function() {
 
 		var pm25Colors = new Array();
 		pm25Colors.push({
-			value: 10,
+			value: 8,
 			color: '#00E400'
 		});
 		pm25Colors.push({
-			value: 11,
+			value: 9,
 			color: '#FFFF00'
 		});
 		pm25Colors.push({
-			value: 12,
+			value: 10,
 			color: '#FF7E00'
 		});
 		pm25Colors.push({
-			value: 13,
+			value: 11,
 			color: '#FF0000'
 		});
 		pm25Colors.push({
-			value: 14,
+			value: 12,
 			color: '#99004C'
 		});
 //		pm25Colors.push({
