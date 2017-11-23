@@ -1,70 +1,13 @@
 
 function Isoline(grids) {
 	//实例化isoline的时候为下面参数赋值
-//	this.gridStep = 100; // 默认网格尺寸
 	this.SplitArray = [8,9,10]; // new Array();
-//	this.extendGridNum = 2; // 外扩网格个数
-
-//	var originas = { // 提取原始数据，归纳分类
-//		"x": new Array(),
-//		"y": new Array(),
-//		"z": new Array(),
-//	};
-
-//	if(data.length > 0) {
-//		$.each(data, function(k, v) {
-//			//首先对原始数据加偏
-//			var coord = trans.PT([v.X, v.Y]);
-//			originas.x.push(coord[0]);
-//			originas.y.push(coord[1]);
-//			originas.z.push(v.Value);
-//		}); 
-//	};
-
-//	var Range_max_x = Math.max.apply(Math, originas.x);
-//	var Range_max_y = Math.max.apply(Math, originas.y);
-//	var Range_min_x = Math.min.apply(Math, originas.x);
-//	var Range_min_y = Math.min.apply(Math, originas.y);
 
 	this.action = function() { // 设置好各种参数之后，进行等值线分割
 
-//		var gridLength = undefined;
-//		var dy = Math.abs(Range_max_y - Range_min_y),
-//			dx = Math.abs(Range_max_x - Range_min_x);
-//
-//		// 判断绘制最小网格方向
-//		if(dx > dy) {
-//			gridLength = dx / (this.gridStep - 1); // y最小 
-//		} else {
-//			gridLength = dy / (this.gridStep - 1); // x最小 
-//		}
-//
-//		Range_min_x -= (gridLength * this.extendGridNum);
-//		Range_min_y -= (gridLength * this.extendGridNum);
-//
-//		dx = dx + this.extendGridNum * gridLength * 2;
-//		dy = dy + this.extendGridNum * gridLength * 2;
-
-		/*
-		 * 全局变量
-		 */
-//		var pointsArrys = new Array(); // 存储生成的内插点
 		var pointsArrys = grids; // 存储生成的内插点
 		var gridsArrys = new Array(); // 请勿修改该名字-------用来存储grid网格
 		var isoLineObjArrys = {}; // 等值线存放数组 
-
-		// 生成所有的内插点
-//		for(var i = 0; i <= dx / gridLength; i++) {
-//			var arr = new Array();
-//			var x = Range_min_x + i * gridLength;
-//			for(var j = 0; j <= dy / gridLength; j++) {
-//				var y = Range_min_y + j * gridLength;
-//				z = GetGridPntValue(x, y);
-//				var pt = new Point(x, y, z, false);
-//				arr.push(pt);
-//			}
-//			pointsArrys.push(arr);
-//		}
 
 		// build grid by pts
 		for(var i = 0; i < pointsArrys.length - 1; i++) {

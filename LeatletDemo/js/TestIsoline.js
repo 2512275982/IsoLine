@@ -52,25 +52,25 @@ var LeafletMap = (function() {
 
 		var pm25Colors = new Array();
 		pm25Colors.push({
-			value: 7,
+			value: 10,
 			color: '#00E400'
 		});
 		pm25Colors.push({
-			value: 8,
+			value: 11,
 			color: '#FFFF00'
 		});
 		pm25Colors.push({
-			value: 9,
+			value: 12,
 			color: '#FF7E00'
 		});
-//		pm25Colors.push({
-//			value: 12,
-//			color: '#FF0000'
-//		});
-//		pm25Colors.push({
-//			value: 13,
-//			color: '#99004C'
-//		});
+		pm25Colors.push({
+			value: 13,
+			color: '#FF0000'
+		});
+		pm25Colors.push({
+			value: 14,
+			color: '#99004C'
+		});
 //		pm25Colors.push({
 //			value: 14,
 //			color: '#7E0023'
@@ -79,26 +79,6 @@ var LeafletMap = (function() {
 		var listData = gridOrignPnts(listObj);
 		var interpolateFeatures = ContourLine.createNew().BandLayer(listData, pm25Colors); //温度色斑图配置文件一项，选择哪种数据类型，都是同样的显示效果
 		interpolateFeatures.addTo(map);
-
-//		var lines = new Isoline(listData);
-//		var lineResults = lines.action();
-//		var lineLyr = L.featureGroup([]); 
-//
-//		for(var index in lineResults) {
-//			var lines = lineResults[index];
-//			lines.forEach(function(line, j) {
-//				var transLine = [];
-//				line.forEach(function(pt, k) {
-//					var coord = trans.PT([pt[0], pt[1]]);
-//					transLine.push(coord);
-//				})
-//				var polyg = L.polyline(transLine, { color: 'black' });
-//				lineLyr.addLayer(polyg);
-//				lineLyr.addTo(map);
-//			})
-//
-//		} 
-
 	};
 
 	return {

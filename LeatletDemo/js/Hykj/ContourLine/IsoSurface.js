@@ -1,4 +1,4 @@
-/*污染面源展示相关内容*/
+/*格网生成等值面*/
 var GridIsoSurface = {
 	createNew: function(grid) {
 		var gridIsoSurface = {};

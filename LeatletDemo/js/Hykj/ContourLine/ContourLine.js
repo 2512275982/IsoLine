@@ -26,21 +26,41 @@ var ContourLine = {
 				contourBandLyr.addLayer(polyg);
 			})
 			
-			var lines = new Isoline(gridInfo);
-			var lineResults = lines.action();
-	
-			for(var index in lineResults) {
-				var lines = lineResults[index];
-				lines.forEach(function(line, j) {
-					var transLine = [];
-					line.forEach(function(pt, k) {
-						var coord = trans.PT([pt[0], pt[1]]);
-						transLine.push(coord);
-					})
-					var polyg = L.polyline(transLine, { color: 'black' });
-					contourBandLyr.addLayer(polyg);
+			var lines = GridIsoline.createNew(gridInfo);
+			var lineResults = lines.WikiIsoline([12]);
+			
+			var finishCount = 0;
+			for(var i=0;i<lineResults.length;i++) {
+				var lines = lineResults[i];
+				var transLine = [];
+				if(!lines.FinishState)
+					count++;
+				else{
+					finishCount++;
+				}
+				lines.ListVertrix.forEach(function(pt, k) {
+					var coord = trans.PT([pt.Y, pt.X]);
+					transLine.push(coord);
 				})
+				var polyg = L.polyline(transLine, { color: 'black' });
+				contourBandLyr.addLayer(polyg);
 			}
+			alert(count+"  "+finishCount);
+			
+//			for(var i = 0; i < gridInfo.length; i++) {
+				var i = 0,j=0;
+//				for(var j = 0; j < gridInfo[i].length; j++) {
+					var pntV4 = gridInfo[i][j];
+					var circle = L.circle([pntV4.Y, pntV4.X], {
+					    color: 'red',
+					    fillColor: '#f03',
+					    fillOpacity: 0.5,
+					    radius: 0.05
+					})
+					circle.bindPopup(pntV4.Z);
+					contourBandLyr.addLayer(circle);
+//				}
+//			}
 			return contourBandLyr;
 		};
 		return contourSO2;
