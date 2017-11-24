@@ -6,22 +6,25 @@ var GridIsoline = {
 	createNew: function(grid) {
 		var gridIsoLine = {};
 		var listIsolines = new Array();
+        var tempIsolines = new Array();
 		var pntGrid = grid;
 		
 		/*
-		 * 维基百科方法生成等值面
+		 * 维基百科方法生成等值线，并实现等值线的合并
 		 */
 		gridIsoLine.WikiIsoline = function(listContourValues) {
 			listIsolines.splice(0, listIsolines.length); //清空数组
 			for(var i = 0; i < listContourValues.length; i++) {
 				GetIsolines(listContourValues[i]);
 				MergeIsolines();
+				listIsolines = listIsolines.concat(tempIsolines);
 			}
 			
 			return listIsolines;
 		};
 		
 		var GetIsolines = function(lineValue){
+			tempIsolines.splice(0, tempIsolines.length); //清空数组
 			for(var i = 0; i < pntGrid.length - 1; i++) {
 				for(var j = 0; j < pntGrid[i].length - 1; j++) {
 					var pntV4 = pntGrid[i][j];
@@ -65,7 +68,7 @@ var GridIsoline = {
 						case '1101'://13
 							x1 = pntV4.X + (lineValue - pntV4.Z) / (pntV3.Z - pntV4.Z) * (pntV3.X - pntV4.X);
 							y1 = pntV3.Y + (lineValue - pntV3.Z) / (pntV2.Z - pntV3.Z) * (pntV2.Y - pntV3.Y);
-							if(i === pntGrid.length - 1)  
+							if(i === pntGrid.length - 2)  
 							{
 								pnt3 = new PointInfo(pntV3.X,y1,lineValue,true);
 								
@@ -90,7 +93,7 @@ var GridIsoline = {
 								pnt3 = new PointInfo(pntV3.X,y2,lineValue,false);
 								
 							}
-							else if(i === pntGrid.length - 1)  
+							else if(i === pntGrid.length - 2)  
 							{
 								pnt1 = new PointInfo(pntV1.X,y1,lineValue,false);
 								pnt3 = new PointInfo(pntV3.X,y2,lineValue,true);
@@ -105,13 +108,13 @@ var GridIsoline = {
 						case '1011':   //11
 							x1 = pntV1.X + (lineValue - pntV1.Z) / (pntV2.Z - pntV1.Z) * (pntV2.X - pntV1.X);
 							y2 = pntV3.Y + (lineValue - pntV3.Z) / (pntV2.Z - pntV3.Z) * (pntV2.Y - pntV3.Y);
-							if(j === pntGrid[i].length - 1){
+							if(j === pntGrid[i].length - 2){
 								pnt2 = new PointInfo(x1,pntV1.Y,lineValue,true);
 							}
 							else{
 								pnt2 = new PointInfo(x1,pntV1.Y,lineValue,false);
 							}
-							if(i === pntGrid.length - 1)  
+							if(i === pntGrid.length - 2)  
 							{
 								pnt3 = new PointInfo(pntV3.X,y2,lineValue,true);
 							}
@@ -129,7 +132,7 @@ var GridIsoline = {
 								pnt2 = new PointInfo(x1,pntV1.Y,lineValue,false);
 								pnt4 = new PointInfo(x2,pntV4.Y,lineValue,true);
 							}
-							else if(j === pntGrid[i].length - 1)
+							else if(j === pntGrid[i].length - 2)
 							{
 								pnt2 = new PointInfo(x1,pntV1.Y,lineValue,true);
 								pnt4 = new PointInfo(x2,pntV4.Y,lineValue,false);
@@ -142,7 +145,7 @@ var GridIsoline = {
 								pnt1 = new PointInfo(pntV1.X,y1,lineValue,true);
 								pnt3 = new PointInfo(pntV3.X,y2,lineValue,false);
 							}
-							else if(i === pntGrid.length - 1)  
+							else if(i === pntGrid.length - 2)  
 							{
 								pnt1 = new PointInfo(pntV1.X,y1,lineValue,false);
 								pnt3 = new PointInfo(pntV3.X,y2,lineValue,true);
@@ -162,7 +165,7 @@ var GridIsoline = {
 								pnt2 = new PointInfo(x1,pntV1.Y,lineValue,false);
 								pnt4 = new PointInfo(x2,pntV4.Y,lineValue,true);
 							}
-							else if(j=== pntGrid[i].length - 1)
+							else if(j=== pntGrid[i].length - 2)
 							{
 								pnt2 = new PointInfo(x1,pntV1.Y,lineValue,true);
 								pnt4 = new PointInfo(x2,pntV4.Y,lineValue,false);
@@ -177,7 +180,7 @@ var GridIsoline = {
 						case '1000': //8
 							y1 = pntV4.Y + (lineValue - pntV4.Z) / (pntV1.Z - pntV4.Z) * (pntV1.Y - pntV4.Y);
 							x1 = pntV1.X + (lineValue - pntV1.Z) / (pntV2.Z - pntV1.Z) * (pntV2.X - pntV1.X);
-							if(j === pntGrid[i].length - 1){
+							if(j === pntGrid[i].length - 2){
 								pnt2 = new PointInfo(x1,pntV1.Y,lineValue,true);
 							}
 							else{
@@ -200,7 +203,7 @@ var GridIsoline = {
 								pnt2 = new PointInfo(x1,pntV1.Y,lineValue,false);
 								pnt4 = new PointInfo(x2,pntV4.Y,lineValue,true);
 							}
-							else if(j=== pntGrid[i].length - 1)
+							else if(j=== pntGrid[i].length - 2)
 							{
 								pnt2 = new PointInfo(x1,pntV1.Y,lineValue,true);
 								pnt4 = new PointInfo(x2,pntV4.Y,lineValue,false);
@@ -213,7 +216,7 @@ var GridIsoline = {
 								pnt1 = new PointInfo(pntV1.X,y1,lineValue,true);
 								pnt3 = new PointInfo(pntV3.X,y2,lineValue,false);
 							}
-							else if(i === pntGrid.length - 1)  
+							else if(i === pntGrid.length - 2)  
 							{
 								pnt1 = new PointInfo(pntV1.X,y1,lineValue,false);
 								pnt3 = new PointInfo(pntV3.X,y2,lineValue,true);
@@ -230,23 +233,29 @@ var GridIsoline = {
 			}
 		}
 		
+		/*
+		 * 合并单值等值线，将一段一段的线合并为一整条等值线
+		 */
 		var MergeIsolines = function(){
-			for(var i = 0;i < listIsolines.length; i++){
-				var line = listIsolines[i];
+			for(var i = 0;i < tempIsolines.length; i++){
+				var line = tempIsolines[i];
 				if(line.FinishState)
 					continue;
-				if(MergeLine(line,i)){
-					listIsolines.splice(i,1);
+				if(MergeLine(i)){
+					tempIsolines.splice(i,1);
 					i=0;
 				}
 			}
 		}
-		
-		var MergeLine = function(line,index){
-			for(var i = 0;i < listIsolines.length; i++){
+		/*
+		 * 指定某段线的合并实现
+		 */
+		var MergeLine = function(index){
+			var line = tempIsolines[index];
+			for(var i = 0;i < tempIsolines.length; i++){
 				if(i === index)
 					continue;
-				var lineM = listIsolines[i];
+				var lineM = tempIsolines[i];
 				if(lineM.FinishState)
 					continue;
 				var pntMFrom = lineM.GetLineFrom();
@@ -255,7 +264,6 @@ var GridIsoline = {
 				var pntFrom = line.GetLineFrom();
 				var pntEnd = line.GetLineEnd();
 				
-				var isMerge = true;
 				if(pntMFrom.Equals(pntFrom) && pntMEnd.Equals(pntEnd)){  //首尾相接
 					lineM.ListVertrix = lineM.ListVertrix.concat(line.ListVertrix.reverse());
 					lineM.FinishState = true;
@@ -301,9 +309,11 @@ var GridIsoline = {
 					lineM.LineType = (lineM.LineType || line.LineType);
 					return true;
 				}
-				else 
-					return false;
+//				else 
+//					return false;
 			}
+			
+			return false;
 		}
 		
 		/*
@@ -318,14 +328,13 @@ var GridIsoline = {
 				isoline.AddPointInfo(lineToPnt);
 				isoline.LineType = true;  //开放型等值线
 				isoline.FinishState = true;  
-				alert("finish  1");
-				listIsolines.push(isoline);
+				tempIsolines.push(isoline);
 			}
 			else{
 				var matchFlag = false;
-				if(listIsolines.length > 0){   //当等值线数量为空时
-					for(var i = 0;i<listIsolines.length-1;i++){  //遍历所有的等值线
-						var isoline = listIsolines[i];
+				if(tempIsolines.length > 0){   //当等值线数量为空时
+					for(var i = 0;i<tempIsolines.length-1;i++){  //遍历所有的等值线
+						var isoline = tempIsolines[i];
 						if(isoline.FinishState)  //如果等值线追踪完成
 							continue;
 						matchFlag = false;
@@ -335,36 +344,26 @@ var GridIsoline = {
 							if(lineFromPnt.IsEdge){
 								matchFlag = pntEnd.Equals(lineToPnt);
 								if(matchFlag){
-//									isoline.AddPointInfo(lineToPnt);
 									isoline.AddPointInfo(lineFromPnt);
 									isoline.FinishState = true;
-									alert("finish 2");
 								}
 							}
 							else if(lineToPnt.IsEdge){
 								matchFlag = pntEnd.Equals(lineFromPnt);
 								if(matchFlag){
-//									isoline.AddPointInfo(lineFromPnt);
 									isoline.AddPointInfo(lineToPnt);
 									isoline.FinishState = true;
-									alert("finish 2");
 								}
 							}
 							else{
 								matchFlag = pntEnd.Equals(lineToPnt);
 								if(matchFlag){
-//									isoline.AddPointInfo(lineToPnt);
 									isoline.AddPointInfo(lineFromPnt);
-//									isoline.FinishState = true;
-//									alert("finish 2");
 								}
 								else{
 									matchFlag = pntEnd.Equals(lineFromPnt);
 									if(matchFlag){
-//										isoline.AddPointInfo(lineFromPnt);
 										isoline.AddPointInfo(lineToPnt);
-//										isoline.FinishState = true;
-//										alert("finish 2");
 									}
 								}
 							}
@@ -391,18 +390,12 @@ var GridIsoline = {
 							else{
 								matchFlag = pntStart.Equals(lineToPnt);
 								if(matchFlag){
-//									isoline.AddPointInfo(lineToPnt,0);
 									isoline.AddPointInfo(lineFromPnt,0);
-//									isoline.FinishState = true;
-//									alert("finish 2");
 								}
 								else{
 									matchFlag = pntStart.Equals(lineFromPnt);
 									if(matchFlag){
-//										isoline.AddPointInfo(lineFromPnt,0);
 										isoline.AddPointInfo(lineToPnt,0);
-//										isoline.FinishState = true;
-//										alert("finish 2");
 									}
 								}
 							}
@@ -477,7 +470,7 @@ var GridIsoline = {
 					if(lineFromPnt.IsEdge || lineToPnt.IsEdge){
 						isoline.LineType = true;  //开放型等值线
 					}
-					listIsolines.push(isoline);
+					tempIsolines.push(isoline);
 				}
 			}
 		}
