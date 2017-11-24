@@ -35,7 +35,7 @@ var GridIsoline = {
 					var type4 = GetTypeValue(pntV4.Z, lineValue);
 					var type = type1.toString() + type2.toString() + type3.toString() + type4.toString();
 					
-					//j为0时，点1为边界点；i为0时，点2为边界点；i为length-1时，点4为边界点；j为length-1时，点3为边界点
+					//j为0时，点4为边界点；i为0时，点1为边界点；i为length-1时，点3为边界点；j为length-1时，点2为边界点
 					var pnt1,pnt2,pnt3,pnt4;
 					var x1, y1, x2, y2;
 					switch(type){
@@ -238,7 +238,6 @@ var GridIsoline = {
 				if(MergeLine(line,i)){
 					listIsolines.splice(i,1);
 					i=0;
-					alert(listIsolines.length);
 				}
 			}
 		}
@@ -248,6 +247,8 @@ var GridIsoline = {
 				if(i === index)
 					continue;
 				var lineM = listIsolines[i];
+				if(lineM.FinishState)
+					continue;
 				var pntMFrom = lineM.GetLineFrom();
 				var pntMEnd = lineM.GetLineEnd();
 				
