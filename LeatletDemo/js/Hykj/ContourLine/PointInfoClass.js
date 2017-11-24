@@ -22,6 +22,13 @@ function PointInfo(lon,lat,eValue,edgeFlag){
 	}
 }
 
+function TestObj(mingzi){
+	this.name = mingzi;
+}
+TestObj.prototype.sayName = function(){
+	alert(this.name);
+}
+
 /*
  * 定义等值线对象，并定义一个公共函数，用于给等值线添加点
  * 初始化参数type：等值线类型，开放型或闭合型，true表示开放型，false表示闭合型

@@ -1,3 +1,10 @@
+/*
+ * 网格生成类，用于网格插值
+ * 作者：maxiaoling
+ * 创建日期：2017.11.20
+ * 插值方法：
+ * 1、反距离权重法 2017.11.20
+ */
 var GridClass = {
 	createNew: function(listPoints) {
 		var gridsInfo = {};

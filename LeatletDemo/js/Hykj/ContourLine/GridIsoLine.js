@@ -1,6 +1,12 @@
 /*
- * 格网生成等值面
- * 初始化输入格网信息
+ * 规则格网等值线追踪算法，包括等值线追踪和平滑
+ * 初始化输入格网信息，GridClass成果
+ * 作者：maxiaoling
+ * 创建日期：2017.11.24
+ * 等值线生成方法：
+ * 1、按照维基百科中方法进行等值短线查找，然后将短线进行首尾的合并形成等值线。等值短线走向使用中点值判断法。 2017.11.24
+ * 等值线平滑方法：
+ * 1、三次B样条曲线方法，方法来自https://github.com/likev/contour.js/blob/master/dengzhixian.js  2017.11.24
  */
 var GridIsoline = {
 	createNew: function(grid) {
@@ -17,10 +23,66 @@ var GridIsoline = {
 			for(var i = 0; i < listContourValues.length; i++) {
 				GetIsolines(listContourValues[i]);
 				MergeIsolines();
-				listIsolines = listIsolines.concat(tempIsolines);
+				
+				for(var j=0;j<tempIsolines.length;j++){
+					var tempLine = tempIsolines[j];
+					var pntss = BsLine(tempLine,20);
+					tempLine.ListVertrix = pntss;
+					listIsolines.push(tempLine);
+				}
+				
+//				listIsolines = listIsolines.concat(tempIsolines);
+				tempIsolines.splice(0,tempIsolines.length);
 			}
 			
 			return listIsolines;
+		};
+		/*
+		 * 三次B样条曲线
+		 * 输入参数isoline：等值折线
+		 * 输入参数clipCount：插值点数量
+		 */
+		var BsLine = function(isoline,clipCount){
+			var bsPoints = new Array();
+			
+			var linePnts = isoline.ListVertrix;
+			var x0 = 2.0*linePnts[0].X - linePnts[1].X;
+			var y0 = 2.0*linePnts[0].Y - linePnts[1].Y;
+			var pnt0 = new PointInfo(x0,y0);
+			var xn = 2.0*linePnts[linePnts.length-1].X-linePnts[linePnts.length-2].X;
+			var yn = 2.0*linePnts[linePnts.length-1].Y-linePnts[linePnts.length-2].Y;
+			var pntn = new PointInfo(xn,yn);
+			
+			linePnts.unshift(pnt0);  //向数组最前面插入值
+			linePnts.push(pntn);    //向数组后面加入值
+			
+			var A0,A1,A2,A3;
+			var B0,B1,B2,B3;
+			var dt = 1.0/clipCount;
+			for(var i = 0;i<linePnts.length-3;i++){
+				A0 = (linePnts[i].X + 4.0 * linePnts[i + 1].X + linePnts[i + 2].X) / 6.0;
+				A1 = -(linePnts[i].X - linePnts[i + 2].X) / 2.0;
+                A2 = (linePnts[i].X - 2.0 * linePnts[i + 1].X + linePnts[i + 2].X) / 2.0;
+                A3 = -(linePnts[i].X - 3.0 * linePnts[i + 1].X + 3.0 * linePnts[i + 2].X - linePnts[i + 3].X) / 6.0;
+                B0 = (linePnts[i].Y + 4.0 * linePnts[i + 1].Y + linePnts[i + 2].Y) / 6.0;
+                B1 = -(linePnts[i].Y - linePnts[i + 2].Y) / 2.0;
+                B2 = (linePnts[i].Y - 2.0 * linePnts[i + 1].Y + linePnts[i + 2].Y) / 2.0;
+                B3 = -(linePnts[i].Y - 3.0 * linePnts[i + 1].Y + 3.0 * linePnts[i + 2].Y - linePnts[i + 3].Y) / 6.0;
+                
+                var t1, t2, t3 = 0;
+                for (var j = 0; j < clipCount + 1; j++)
+                {
+                    t1 = dt * j;
+                    t2 = t1 * t1;
+                    t3 = t1 * t2;
+
+                    var x = A0 + A1 * t1 + A2 * t2 + A3 * t3;
+                    var y = B0 + B1 * t1 + B2 * t2 + B3 * t3;
+
+                    bsPoints.push(new PointInfo(x, y));
+                }
+			}
+			return bsPoints;
 		};
 		
 		var GetIsolines = function(lineValue){
