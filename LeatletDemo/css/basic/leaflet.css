@@ -101,6 +101,16 @@
 	position: absolute;
 	}
 
+.anim-tooltip{
+  transition: opacity 4.0s linear;/*动画效果*/
+  font:italic bold 12px/30px arial,sans-serif;
+  font-family:"Times New Roman",Georgia,Serif;
+  /*字体发光*/
+  text-shadow: 1px 0 0 #8B4513, 0 1px 0 #8B4513, 
+    0 -1px 0 #8B4513, -1px 0 0 #8B4513, 
+    1px 0 1px #8B4513, 0 1px 1px #8B4513, 
+    0 -1px 1px #8B4513, -1px 0 1px #8B4513;
+}
 
 /* control positioning */
 

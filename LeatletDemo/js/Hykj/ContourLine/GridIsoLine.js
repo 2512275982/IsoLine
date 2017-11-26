@@ -26,17 +26,40 @@ var GridIsoline = {
 				
 				for(var j=0;j<tempIsolines.length;j++){
 					var tempLine = tempIsolines[j];
-					var pntss = BsLine(tempLine,20);
+					
+					tempLine.Label = GetLabelInfo(tempLine);
+					
+					var pntss = BsLine(tempLine,10);
 					tempLine.ListVertrix = pntss;
 					listIsolines.push(tempLine);
 				}
-				
-//				listIsolines = listIsolines.concat(tempIsolines);
 				tempIsolines.splice(0,tempIsolines.length);
 			}
 			
-			return listIsolines;
+			return listIsolines; 
 		};
+		
+		/*
+		 * 获取等值线的标注信息，包括位置，角度以及值
+		 */
+		var GetLabelInfo = function(isoline){
+//			alert(isoline.LineValue);
+			var pntLabel,angle;
+			var maxDis = 0;
+			var linePnts = isoline.ListVertrix;
+			var pnt1,pnt2,dis;
+			for(var i = 0; i < linePnts.length - 1; i++){
+				pnt1 = linePnts[i];
+				pnt2 = linePnts[i + 1];
+				dis = Math.sqrt((pnt1.X - pnt2.X)*(pnt1.X - pnt2.X) + (pnt1.Y - pnt2.Y)*(pnt1.Y - pnt2.Y));
+				if(dis>maxDis){
+					pntLabel = new PointInfo((pnt1.X+pnt2.X)/2,(pnt1.Y+pnt2.Y)/2);
+					angle = (pnt2.Y - pnt1.Y)/(pnt2.X - pnt1.X);
+				}
+			}
+			return new LabelInfo(pntLabel,angle,isoline.LineValue);
+		}
+		
 		/*
 		 * 三次B样条曲线
 		 * 输入参数isoline：等值折线
@@ -124,7 +147,7 @@ var GridIsoline = {
 							else{
 								pnt4 = new PointInfo(x1,pntV4.Y,lineValue,false);
 							}
-							UpdateIsolines(pnt1,pnt4);
+							UpdateIsolines(pnt1,pnt4,lineValue);
 							break;
 						case '0010'://2
 						case '1101'://13
@@ -143,7 +166,7 @@ var GridIsoline = {
 							else{
 								pnt4 = new PointInfo(x1,pntV4.Y,lineValue,false);
 							}
-							UpdateIsolines(pnt3,pnt4);
+							UpdateIsolines(pnt3,pnt4,lineValue);
 							break;
 						case '0011':  //3
 						case '1100':  //12
@@ -164,7 +187,7 @@ var GridIsoline = {
 								pnt1 = new PointInfo(pntV1.X,y1,lineValue,false);
 								pnt3 = new PointInfo(pntV3.X,y2,lineValue,false);
 							}
-							UpdateIsolines(pnt3,pnt1);
+							UpdateIsolines(pnt3,pnt1,lineValue);
 							break;
 						case '0100':   //4
 						case '1011':   //11
@@ -183,7 +206,7 @@ var GridIsoline = {
 							else{
 								pnt3 = new PointInfo(pntV3.X,y2,lineValue,false);
 							}
-							UpdateIsolines(pnt3,pnt2);
+							UpdateIsolines(pnt3,pnt2,lineValue);
 							break;
 						case '0101': //5
 							y1 = pntV4.Y + (lineValue - pntV4.Z) / (pntV1.Z - pntV4.Z) * (pntV1.Y - pntV4.Y);
@@ -216,8 +239,8 @@ var GridIsoline = {
 								pnt1 = new PointInfo(pntV1.X,y1,lineValue,false);
 								pnt3 = new PointInfo(pntV3.X,y2,lineValue,false);
 							}
-							UpdateIsolines(pnt1,pnt2);
-							UpdateIsolines(pnt3,pnt4);
+							UpdateIsolines(pnt1,pnt2,lineValue);
+							UpdateIsolines(pnt3,pnt4,lineValue);
 							break;
 						case '0110':  //6
 						case '1001':  //9
@@ -236,7 +259,7 @@ var GridIsoline = {
 								pnt2 = new PointInfo(x1,pntV1.Y,lineValue,false);
 								pnt4 = new PointInfo(x2,pntV4.Y,lineValue,false);
 							}
-							UpdateIsolines(pnt4,pnt2);
+							UpdateIsolines(pnt4,pnt2,lineValue);
 							break;
 						case '0111':  //7
 						case '1000': //8
@@ -254,7 +277,7 @@ var GridIsoline = {
 							else{
 								pnt1 = new PointInfo(pntV1.X,y1,lineValue,false);
 							}
-							UpdateIsolines(pnt1,pnt2);
+							UpdateIsolines(pnt1,pnt2,lineValue);
 							break;
 						case '1010':  //10
 							y1 = pntV4.Y + (lineValue - pntV4.Z) / (pntV1.Z - pntV4.Z) * (pntV1.Y - pntV4.Y);
@@ -287,8 +310,8 @@ var GridIsoline = {
 								pnt1 = new PointInfo(pntV1.X,y1,lineValue,false);
 								pnt3 = new PointInfo(pntV3.X,y2,lineValue,false);
 							}
-							UpdateIsolines(pnt3,pnt2);
-							UpdateIsolines(pnt1,pnt4);
+							UpdateIsolines(pnt3,pnt2,lineValue);
+							UpdateIsolines(pnt1,pnt4,lineValue);
 							break;
 					}
 				}
@@ -382,10 +405,10 @@ var GridIsoline = {
 		 * 将追踪的短线段添加到等值线列表中
 		 * 输入参数lineFromPnt和lineToPnt，分别标识短线段的起始点
 		 */
-		var UpdateIsolines = function(lineFromPnt,lineToPnt){
+		var UpdateIsolines = function(lineFromPnt,lineToPnt,value){
 			//当两个点都是边界点时，该等值线由这两个点组成
 			if(lineFromPnt.IsEdge && lineToPnt.IsEdge){
-				var isoline = new IsolineInfo();  
+				var isoline = new IsolineInfo(value);  
 				isoline.AddPointInfo(lineFromPnt);
 				isoline.AddPointInfo(lineToPnt);
 				isoline.LineType = true;  //开放型等值线
@@ -525,7 +548,7 @@ var GridIsoline = {
 					}
 				}
 				if(!matchFlag){    //如果没有找到匹配的等值线，则添加一条新的等值线
-					var isoline = new IsolineInfo();  
+					var isoline = new IsolineInfo(value);  
 					isoline.AddPointInfo(lineFromPnt);
 					isoline.AddPointInfo(lineToPnt);
 					

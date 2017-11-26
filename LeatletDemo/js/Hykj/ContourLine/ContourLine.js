@@ -27,7 +27,10 @@ var ContourLine = {
 //			})
 			
 			var lines = GridIsoline.createNew(gridInfo);
-			var lineResults = lines.WikiIsoline([10,11,12]);
+			var lineResults = lines.WikiIsoline([10,12,14,16,18]);
+			
+//			var delauay = DelauneyClass.createNew(listData);
+//			var lineResults = delauay.Isoline([18])
 			
 //			var finishCount = 0;
 			for(var i=0;i<lineResults.length;i++) {
@@ -59,23 +62,18 @@ var ContourLine = {
 				})
 				var polyg = L.polyline(transLine, { color: 'black' });
 				contourBandLyr.addLayer(polyg);
+				
+//				var labelPnt = trans.PT([lines.Label.LabelPnt.Y, lines.Label.LabelPnt.X]);
+//				var marker = L.marker(labelPnt, {
+//                }).bindTooltip(lines.Label.Value, {
+//                      permanent : true,
+//                      offset : [ 0, 0 ],// 偏移
+////                      direction : "right",// 放置位置
+//                      // sticky:true,//是否标记在点上面
+//                      className : 'anim-tooltip',// CSS控制
+//                  }).openTooltip();
+//              contourBandLyr.addLayer(marker);
 			}
-//			alert(count+"  "+finishCount);
-			
-//			for(var i = 0; i < gridInfo.length; i++) {
-////				var i = 0,j=0;
-//				for(var j = 0; j < gridInfo[i].length; j++) {
-//					var pntV4 = gridInfo[i][j];
-//					var circle = L.circle([pntV4.Y, pntV4.X], {
-//					    color: 'red',
-//					    fillColor: '#f03',
-//					    fillOpacity: 0.5,
-//					    radius: 0.05
-//					})
-//					circle.bindPopup(pntV4.Z);
-//					contourBandLyr.addLayer(circle);
-//				}
-//			}
 			return contourBandLyr;
 		};
 		return contourSO2;

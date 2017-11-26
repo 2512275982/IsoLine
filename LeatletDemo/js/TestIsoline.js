@@ -34,8 +34,10 @@ var LeafletMap = (function() {
 			if(item.latitude < 31.383 || item.latitude > 36.37) {
 				return true;
 			}
-			var pntClass = new PointInfo(item.longitude, item.latitude, item.eValue);
-			listGridOrignPnts.push(pntClass);
+			if(/^5./.test(item.stationID)){  //匹配以5开头的国家站
+				var pntClass = new PointInfo(item.longitude, item.latitude, item.eValue);
+				listGridOrignPnts.push(pntClass);
+			}
 		});
 		return listGridOrignPnts;
 	};
