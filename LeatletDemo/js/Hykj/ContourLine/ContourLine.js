@@ -27,7 +27,7 @@ var ContourLine = {
 //			})
 			
 			var lines = GridIsoline.createNew(gridInfo);
-			var lineResults = lines.WikiIsoline([10,12,14,16,18]);
+			var lineResults = lines.WikiIsoline([7,8,9,10,11]);
 			
 //			var delauay = DelauneyClass.createNew(listData);
 //			var lineResults = delauay.Isoline([18])
@@ -63,6 +63,13 @@ var ContourLine = {
 				var polyg = L.polyline(transLine, { color: 'black' });
 				contourBandLyr.addLayer(polyg);
 				
+				var labelPnt = trans.PT([lines.Label.LabelPnt.Y, lines.Label.LabelPnt.X]);
+				var marker = L.marker(labelPnt, {
+					icon: L.divIcon({
+						html: '<div>'+lines.Label.Value+'</div>'
+					}),
+				})
+				contourBandLyr.addLayer(marker);
 //				var labelPnt = trans.PT([lines.Label.LabelPnt.Y, lines.Label.LabelPnt.X]);
 //				var marker = L.marker(labelPnt, {
 //                }).bindTooltip(lines.Label.Value, {
