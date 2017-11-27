@@ -53,9 +53,6 @@ var ContourLine = {
 					})
 					contourBandLyr.addLayer(circle1);
 				}
-//				else{
-//					finishCount++;
-//				}
 				lines.ListVertrix.forEach(function(pt, k) {
 					var coord = trans.PT([pt.Y, pt.X]);
 					transLine.push(coord);
@@ -70,16 +67,6 @@ var ContourLine = {
 					}),
 				})
 				contourBandLyr.addLayer(marker);
-//				var labelPnt = trans.PT([lines.Label.LabelPnt.Y, lines.Label.LabelPnt.X]);
-//				var marker = L.marker(labelPnt, {
-//                }).bindTooltip(lines.Label.Value, {
-//                      permanent : true,
-//                      offset : [ 0, 0 ],// 偏移
-////                      direction : "right",// 放置位置
-//                      // sticky:true,//是否标记在点上面
-//                      className : 'anim-tooltip',// CSS控制
-//                  }).openTooltip();
-//              contourBandLyr.addLayer(marker);
 			}
 			return contourBandLyr;
 		};
