@@ -63,7 +63,7 @@ var ContourLine = {
 				var labelPnt = trans.PT([lines.Label.LabelPnt.Y, lines.Label.LabelPnt.X]);
 				var marker = L.marker(labelPnt, {
 					icon: L.divIcon({
-						html: '<div>'+lines.Label.Value+'</div>'
+						html: '<div style="font-size:10px">'+lines.Label.Value+'</div>'
 					}),
 				})
 				contourBandLyr.addLayer(marker);
