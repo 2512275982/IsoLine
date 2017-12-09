@@ -39,6 +39,216 @@ var GridIsoline = {
 			return listIsolines; 
 		};
 		
+		var GetIsoBands = function(yMax,yMin,xMax,xMin){
+			var listClass1 = new Array();
+			var listClass2 = new Array();
+			var listClass3 = new Array();
+			var listClass4 = new Array();
+			var listClass5 = new Array();
+			var listClass6 = new Array();
+			var listClass7 = new Array();
+			var listClass8 = new Array();
+			var listClass9 = new Array();
+			var listClass10 = new Array();
+			var listClass11 = new Array();
+			for(var i=0;i<listIsolines.length;i++){
+				var line = lineResults[i];
+				if(line.LineType){  //开放型
+					var pntFrom = line.GetLineFrom();
+					var pntEnd = line.GetLineEnd();
+					var type1,type2,lineCompare;
+					if(Math.abs(pntFrom.X - xMin) < 0.0000001){
+						type1 = 1;
+					}
+					else if(Math.abs(pntFrom.X - xMax) < 0.0000001){
+						type1 = 3;
+					}
+					else if(Math.abs(pntFrom.Y - yMin) < 0.0000001){
+						type1 = 4;
+					}
+					else if(Math.abs(pntFrom.Y - yMax) < 0.0000001){
+						type1 = 2;
+					}
+					if(Math.abs(pntEnd.X - xMin) < 0.0000001){
+						type2 = 1;
+					}
+					else if(Math.abs(pntEnd.X - xMax) < 0.0000001){
+						type2 = 3;
+					}
+					else if(Math.abs(pntEnd.Y - yMin) < 0.0000001){
+						type2 = 4;
+					}
+					else if(Math.abs(pntEnd.Y - yMax) < 0.0000001){
+						type2 = 2;
+					}
+					var type = type1.toString()+type2.toString();
+					
+					switch(type){
+						case "33":   //第2类
+							for(var j = 0;j<listClass2.length; j++){
+								lineCompare = listClass2[j];
+								if(pntFrom.Y > lineCompare.GetLineFrom().Y && pntFrom.Y > lineCompare.GetLineEnd().Y){
+									listClass2.splice(j,0,line);
+									break;
+								}
+							}
+							listClass2.push(line);
+							break;
+						case "11":  //第3类
+							for(var j = 0;j<listClass3.length;j++){
+								lineCompare = listClass3[j];
+								if(pntFrom.Y > lineCompare.GetLineFrom().Y && pntFrom.Y > lineCompare.GetLineEnd().Y){
+									listClass3.splice(j,0,line);
+									break;
+								}
+							}
+							listClass3.push(line);
+							break;
+						case "44": //第4类
+							for(var j = 0;j<listClass4.length;j++){
+								lineCompare = listClass4[j];
+								if(pntFrom.X > lineCompare.GetLineFrom().X && pntFrom.X > lineCompare.GetLineEnd().X){
+									listClass4.splice(j,0,line);
+									break;
+								}
+							}
+							listClass4.push(line);
+							break;
+						case "22":  //第5类
+							for(var j = 0;j<listClass5.length;j++){
+								lineCompare = listClass5[j];
+								if(pntFrom.X > lineCompare.GetLineFrom().X && pntFrom.X > lineCompare.GetLineEnd().X){
+									listClass5.splice(j,0,line);
+									break;
+								}
+							}
+							listClass5.push(line);
+							break;
+						case "12":  //第6类
+						case "21":
+							for(var j = 0;j<listClass6.length;j++){
+								lineCompare = listClass6[j];
+								if(pntFrom.X > lineCompare.GetLineFrom().X && pntFrom.X > lineCompare.GetLineEnd().X){
+									listClass6.splice(j,0,line);
+									break;
+								}
+								else if(pntFrom.Y < lineCompare.GetLineFrom().Y && pntFrom.Y < lineCompare.GetLineEnd().Y){
+									listClass6.splice(j,0,line);
+									break;
+								}
+							}
+							listClass6.push(line);
+							break;
+						case "14":  //第7类
+						case "41":
+							for(var j = 0;j<listClass7.length;j++){
+								lineCompare = listClass7[j];
+								if(pntFrom.X > lineCompare.GetLineFrom().X && pntFrom.X > lineCompare.GetLineEnd().X){
+									listClass7.splice(j,0,line);
+									break;
+								}
+								else if(pntFrom.Y > lineCompare.GetLineFrom().Y && pntFrom.Y > lineCompare.GetLineEnd().Y){
+									listClass7.splice(j,0,line);
+									break;
+								}
+							}
+							listClass7.push(line);
+							break;
+						case "34":  //第8类
+						case "43":
+							for(var j = 0;j<listClass8.length;j++){
+								lineCompare = listClass8[j];
+								if(pntFrom.X < lineCompare.GetLineFrom().X && pntFrom.X < lineCompare.GetLineEnd().X){
+									listClass8.splice(j,0,line);
+									break;
+								}
+								else if(pntFrom.Y > lineCompare.GetLineFrom().Y && pntFrom.Y > lineCompare.GetLineEnd().Y){
+									listClass8.splice(j,0,line);
+									break;
+								}
+							}
+							listClass8.push(line);
+							break;
+						case "23":   //第9类
+						case "32":
+							for(var j = 0;j<listClass9.length;j++){
+								lineCompare = listClass9[j];
+								if(pntFrom.X < lineCompare.GetLineFrom().X && pntFrom.X < lineCompare.GetLineEnd().X){
+									listClass9.splice(j,0,line);
+									break;
+								}
+								else if(pntFrom.Y < lineCompare.GetLineFrom().Y && pntFrom.Y < lineCompare.GetLineEnd().Y){
+									listClass9.splice(j,0,line);
+									break;
+								}
+							}
+							listClass9.push(line);
+							break;
+						case "13":  //第10类
+						case "31":
+							for(var j = 0;j<listClass10.length;j++){
+								lineCompare = listClass10[j];
+								if(pntFrom.Y > lineCompare.GetLineFrom().Y){
+									listClass10.splice(j,0,line);
+									break;
+								}
+							}
+							listClass10.push(line);
+							break;
+						case "24":  //第11类
+						case "42":
+							for(var j = 0;j<listClass11.length;j++){
+								lineCompare = listClass11[j];
+								if(pntFrom.X > lineCompare.GetLineFrom().X){
+									listClass11.splice(j,0,line);
+									break;
+								}
+							}
+							listClass11.push(line);
+							break;
+					}
+				}
+				else{   //闭合型，反向遍历
+					for(var j = listClass1.length - 1; j>=0; j++){
+						lineCompare = listClass1[j];
+						if(JudgePntInPolygon(pntFrom,lineCompare.ListVertrix)){
+							listClass1.splice(j+1,0,line);
+						}
+					}
+					listClass1.push(line);
+				}
+			}
+		}
+		
+		/*
+		 * 判断点是否在多边形内
+		 * http://blog.csdn.net/qq_22929803/article/details/46818009
+		 */
+		var JudgePntInPolygon = function(pnt,polyPnts){
+			var count = polyPnts.length;
+			if(count < 4){
+				return false;
+			}
+			var p1,p2,dx;
+			var pSum = 0;
+			for(var i = 0;i<polyPnts.length;i++){
+				p1 = polyPnts[i];
+				p2 = polyPnts[i+1];
+				if(((pnt.Y >= p1.Y) && (pnt.Y < p2.Y)) || ((pnt.Y >= p2.Y)&&(pnt.Y<p1.Y))){
+					if(Math.abs(p1.Y - p2.Y)>0){
+						dx = p1.X - ((p1.X - p2.X)*(p1.Y-p.Y))/(p1.Y-p2.Y);
+						if(dx<pnt.x){
+							pSum++;
+						}
+					}
+				}
+			}
+			if((pSum%2)!=0){
+				return true;
+			}
+			return false;
+		}
+		
 		/*
 		 * 获取等值线的标注信息，包括位置，角度以及值
 		 */

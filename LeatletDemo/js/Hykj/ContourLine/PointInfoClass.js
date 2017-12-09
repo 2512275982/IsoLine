@@ -65,6 +65,26 @@ function LabelInfo(labelPnt,labelAngle,value){
 	this.Value = value;
 }
 
+/*
+ * 目前只支持简单多边形，不支持多环多边形
+ */
+function IsoPolygonInfo(vertries) {
+		this.listPolygonVertrix = vertries;
+		this.minValue = undefined;
+		this.maxValue = undefined;
+}
+IsoPolygonInfo.prototype = {
+	constructor : IsoPolygonInfo,
+	AddPointInfo : function(pntInfo,index){
+		if(index === 0){
+			this.listPolygonVertrix.unshift(pntInfo);
+		}
+		else{
+			this.listPolygonVertrix.push(pntInfo);
+		}
+	}
+}
+
 function EdgeInfo(pntA,pntB){
 	this.EdgeID = guid();
 	this.PointA = pntA;
@@ -179,5 +199,4 @@ var PolygonInfoClass = {
 		};
 		return polygonInfo;
 	}
-	
 };

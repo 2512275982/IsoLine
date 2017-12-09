@@ -27,7 +27,7 @@ var ContourLine = {
 //			})
 			
 			var lines = GridIsoline.createNew(gridInfo);
-			var lineResults = lines.WikiIsoline([7,8,9,10,11]);
+			var lineResults = lines.WikiIsoline([4,5,6,7,8,9,10,11]);
 			
 //			var delauay = DelauneyClass.createNew(listData);
 //			var lineResults = delauay.Isoline([18])
@@ -37,7 +37,7 @@ var ContourLine = {
 				var lines = lineResults[i];
 				var transLine = [];
 				if(!lines.FinishState){
-					count++;
+//					count++;
 					var circle = L.circle([lines.GetLineFrom().Y, lines.GetLineFrom().X], {
 					    color: 'red',
 					    fillColor: '#f03',

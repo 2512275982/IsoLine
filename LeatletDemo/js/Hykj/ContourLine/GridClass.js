@@ -22,12 +22,13 @@ var GridClass = {
 		 * 根据原始的点数据，插值构造网格矩阵
 		 * 网格数默认为100，可以调参数，网格数越多步数越小，生成的等值线越平滑
 		 */
-		gridsInfo.GetGrids = function() {
+		gridsInfo.GetGrids = function(maxGrid) {
 			var pntGrid = new Array();
-			var yMax = -1,
-				yMin = -1,
-				xMax = -1,
-				xMin = -1;
+			
+			gridsInfo.yMax = -1,
+			gridsInfo.yMin = -1,
+			gridsInfo.xMax = -1,
+			gridsInfo.xMin = -1;
 
 			$.each(listOriginPnts, function(i, item) {
 				originas.x.push(item.X)
@@ -35,10 +36,15 @@ var GridClass = {
 				originas.z.push(item.Value)
 			});
 
-			yMax = Math.max.apply(Math, originas.y);
-			yMin = Math.min.apply(Math, originas.y);
-			xMax = Math.max.apply(Math, originas.x);
-			xMin = Math.min.apply(Math, originas.x);
+			gridsInfo.yMax = Math.max.apply(Math, originas.y);
+			gridsInfo.yMin = Math.min.apply(Math, originas.y);
+			gridsInfo.xMax = Math.max.apply(Math, originas.x);
+			gridsInfo.xMin = Math.min.apply(Math, originas.x);
+			
+//			yMax = maxGrid[0];
+//			yMin = maxGrid[1];
+//			xMax = maxGrid[2];
+//			xMin = maxGrid[3];
 
 			var dx = xMax - xMin;
 			var dy = yMax - yMin;
@@ -71,6 +77,26 @@ var GridClass = {
 			}
 			return pntGrid;
 		};
+		
+//		gridsInfo.GetMaxGrid = function(){
+//			gridsInfo.yMax = -1,
+//			gridsInfo.yMin = -1,
+//			gridsInfo.xMax = -1,
+//			gridsInfo.xMin = -1;
+//
+//			$.each(listOriginPnts, function(i, item) {
+//				originas.x.push(item.X)
+//				originas.y.push(item.Y)
+//				originas.z.push(item.Value)
+//			});
+//
+//			gridsInfo.yMax = Math.max.apply(Math, originas.y);
+//			gridsInfo.yMin = Math.min.apply(Math, originas.y);
+//			gridsInfo.xMax = Math.max.apply(Math, originas.x);
+//			gridsInfo.xMin = Math.min.apply(Math, originas.x);
+//			
+//			return [yMax,yMin,xMax,xMin];
+//		};
 
 		/*
 		 * 插值取网格值，返回网格值
