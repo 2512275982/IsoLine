@@ -66,22 +66,108 @@ function LabelInfo(labelPnt,labelAngle,value){
 }
 
 /*
- * 目前只支持简单多边形，不支持多环多边形
+ * 简单多边形，组成multiPolygon的单元
+ * vertries：点数组，[[x1,y1],[x2,y2],[x3,y3],...]
+ * 参考了openlayers和leaflet的多边形定义，点数组不闭合，也就是起点和终点不是同一个点
+ * edit by maxiaoling 2017.12.13
  */
-function IsoPolygonInfo(vertries) {
-		this.listPolygonVertrix = vertries;
+function IsoRing(vertries){
+	this.vertries = vertries;
+}
+IsoRing.prototype = {
+	constructor : IsoRing,
+	//在多边形的末尾加上一个点
+	PushPoint : function(pntInfo){
+		this.listPolygonVertrix.push(pntInfo);
+	},
+	//在多边形的开头加上一个点
+	UnshiftPoint : function(pntInfo){
+		this.listPolygonVertrix.unshift(pntInfo);
+	},
+	JudgePntInRing : function(pntInfo){
+		var count = this.vertries.length;
+			if(count < 3){
+				return false;
+			}
+			var p1,p2,dx;
+			var x1,y1,x2,y2,x,y;
+			var pSum = 0;
+			for(var i = 0;i<this.vertries.length;i++){
+				p1 = this.vertries[i];
+				x1 = p1[0],y1 = p1[1];
+				p2 = this.vertries[i+1];
+				x2 = p2[0],y2 = p2[1];
+				x = pnt.X,y = pnt.Y;
+				if(((y >= y1) && (y < y2)) || ((y >= y2)&&(y < y1))){
+					if(Math.abs(y1 - y2)>0){
+						dx = x1 - ((x1 - x2)*(y1-y))/(y1-y2);
+						if(dx<pnt.x){
+							pSum++;
+						}
+					}
+				}
+			}
+			if((pSum%2)!=0){
+				return true;
+			}
+			return false;
+	}
+}
+
+function IsoRingInfo(id,isoRing,value){
+	this.isoRing = isoRing;
+	this.id = id;
+	this.value = value;
+	this.ringParent = undefined;
+	this.ringChidren = new Array();
+}
+IsoRingInfo.prototype = {
+	constructor : IsoRingInfo,
+	AddChild : function(childRingId){
+		this.ringChidren.push(childRingId);
+	}
+}
+
+var JudgePntInPolygon = function(pnt,polyPnts){
+			var count = polyPnts.length;
+			if(count < 4){
+				return false;
+			}
+			var p1,p2,dx;
+			var pSum = 0;
+			for(var i = 0;i<polyPnts.length;i++){
+				p1 = polyPnts[i];
+				p2 = polyPnts[i+1];
+				if(((pnt.Y >= p1.Y) && (pnt.Y < p2.Y)) || ((pnt.Y >= p2.Y)&&(pnt.Y<p1.Y))){
+					if(Math.abs(p1.Y - p2.Y)>0){
+						dx = p1.X - ((p1.X - p2.X)*(p1.Y-p.Y))/(p1.Y-p2.Y);
+						if(dx<pnt.x){
+							pSum++;
+						}
+					}
+				}
+			}
+			if((pSum%2)!=0){
+				return true;
+			}
+			return false;
+		}
+
+/*
+ * 多边形，支持multiPolygon，由IsoRing组成
+ * outerRings:外围多边形IsoRing数组，可由一个或多个组成（暂时未想到必须多个的情况）
+ * interRings:内部镂空多边形IsoRing数组，可由一个或多个组成
+ */
+function IsoPolygonInfo(outerRings,interRings) {
+		this.outerRings = outerRings;
+		this.interRings = interRings;
 		this.minValue = undefined;
 		this.maxValue = undefined;
 }
 IsoPolygonInfo.prototype = {
 	constructor : IsoPolygonInfo,
-	AddPointInfo : function(pntInfo,index){
-		if(index === 0){
-			this.listPolygonVertrix.unshift(pntInfo);
-		}
-		else{
-			this.listPolygonVertrix.push(pntInfo);
-		}
+	AddInterRing : function(isoRing){
+		this.interRings.push(isoRing);
 	}
 }
 
@@ -175,7 +261,7 @@ function guid() {
        return (((1+Math.random())*0x10000)|0).toString(16).substring(1);  
     }  
     return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());  
-} 
+}
 
 /*
  * 目前只支持简单多边形，不支持多环多边形

@@ -39,6 +39,18 @@ var GridIsoline = {
 			return listIsolines; 
 		};
 		
+		/*
+		 * 将组成线的点转换成面的点数组，后面将点的数组换掉
+		 * 2017.12.13，遗留工作标记
+		 */
+		var TransPntArrayToCoors = function(pntArray){
+			var coords = new Array();
+			for(var i = 0;i<pntArray.length;i++){
+				coords.push([pntArray[i].X,pntArray[i].Y]);
+			}
+			return coords;
+		};
+		
 		var GetIsoBands = function(yMax,yMin,xMax,xMin){
 			var listClass1 = new Array();
 			var listClass2 = new Array();
@@ -51,12 +63,14 @@ var GridIsoline = {
 			var listClass9 = new Array();
 			var listClass10 = new Array();
 			var listClass11 = new Array();
+			
+			var  isoRing,isoRingInfo,ringId;
 			for(var i=0;i<listIsolines.length;i++){
 				var line = lineResults[i];
 				if(line.LineType){  //开放型
 					var pntFrom = line.GetLineFrom();
 					var pntEnd = line.GetLineEnd();
-					var type1,type2,lineCompare;
+					var type1,type2,ringCompare;
 					if(Math.abs(pntFrom.X - xMin) < 0.0000001){
 						type1 = 1;
 					}
@@ -83,16 +97,29 @@ var GridIsoline = {
 					}
 					var type = type1.toString()+type2.toString();
 					
+					
 					switch(type){
 						case "33":   //第2类
+							ringId = "33" + listClass2.length.toString();
+							isoRing = new IsoRing(TransPntArrayToCoors(line.ListVertrix));
+							isoRingInfo = new IsoRingInfo(ringId,isoRing,line.LineValue);
+							
 							for(var j = 0;j<listClass2.length; j++){
-								lineCompare = listClass2[j];
-								if(pntFrom.Y > lineCompare.GetLineFrom().Y && pntFrom.Y > lineCompare.GetLineEnd().Y){
-									listClass2.splice(j,0,line);
-									break;
+								ringCompare = listClass2[j];
+								if(ringCompare.isoRing.JudgePntInRing(pntFrom)){
+									
 								}
 							}
-							listClass2.push(line);
+							
+							//以线的起始点判断是否包含关系
+//							for(var j = 0;j<listClass2.length; j++){
+//								lineCompare = listClass2[j];
+//								if(pntFrom.Y > lineCompare.GetLineFrom().Y && pntFrom.Y > lineCompare.GetLineEnd().Y){
+//									listClass2.splice(j,0,line);  
+//									break;
+//								}
+//							}
+							listClass2.push(isoRingInfo);
 							break;
 						case "11":  //第3类
 							for(var j = 0;j<listClass3.length;j++){
@@ -208,7 +235,7 @@ var GridIsoline = {
 							break;
 					}
 				}
-				else{   //闭合型，反向遍历
+				else{   //闭合型，反向遍历，第1类
 					for(var j = listClass1.length - 1; j>=0; j++){
 						lineCompare = listClass1[j];
 						if(JudgePntInPolygon(pntFrom,lineCompare.ListVertrix)){
@@ -218,7 +245,13 @@ var GridIsoline = {
 					listClass1.push(line);
 				}
 			}
+			/*
+			 * 将线转换成面，并判断包含关系
+			 */
+			
 		}
+		
+		
 		
 		/*
 		 * 判断点是否在多边形内
