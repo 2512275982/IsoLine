@@ -9,6 +9,10 @@ var GridClass = {
 	createNew: function(listPoints) {
 		var gridsInfo = {};
 		var listOriginPnts = listPoints;
+		var yMax = -1,
+			yMin = -1,
+			xMax = -1,
+			xMin = -1;
 		
 		var gridStep = 150; //-----------该个数与等值线的生成个数应该一致，修改的时候请一同修改(包括下面的外扩个数)
 		var extendGridNum = 2;
@@ -24,11 +28,6 @@ var GridClass = {
 		 */
 		gridsInfo.GetGrids = function(maxGrid) {
 			var pntGrid = new Array();
-			
-			gridsInfo.yMax = -1,
-			gridsInfo.yMin = -1,
-			gridsInfo.xMax = -1,
-			gridsInfo.xMin = -1;
 
 			$.each(listOriginPnts, function(i, item) {
 				originas.x.push(item.X)
@@ -36,10 +35,10 @@ var GridClass = {
 				originas.z.push(item.Value)
 			});
 
-			gridsInfo.yMax = Math.max.apply(Math, originas.y);
-			gridsInfo.yMin = Math.min.apply(Math, originas.y);
-			gridsInfo.xMax = Math.max.apply(Math, originas.x);
-			gridsInfo.xMin = Math.min.apply(Math, originas.x);
+			yMax = Math.max.apply(Math, originas.y);
+			yMin = Math.min.apply(Math, originas.y);
+			xMax = Math.max.apply(Math, originas.x);
+			xMin = Math.min.apply(Math, originas.x);
 			
 //			yMax = maxGrid[0];
 //			yMin = maxGrid[1];
@@ -61,8 +60,12 @@ var GridClass = {
 
 			dx = dx + extendGridNum * step * 2;
 			dy = dy + extendGridNum * step * 2;
+			
+			xMax = xMax + extendGridNum * step;
+			yMax = yMax + extendGridNum * step;
 
-			pntGrid.splice(0, pntGrid.length);
+			pntGrid.splice(0, pntGrid.
+				length);
 
 			for(var i = 0; i <= dx / step; i++) {
 				var gridArray = new Array();
@@ -77,7 +80,18 @@ var GridClass = {
 			}
 			return pntGrid;
 		};
-		
+		gridsInfo.getXmin = function(){
+			return xMin;
+		};
+		gridsInfo.getXmax = function(){
+			return xMax;
+		};
+		gridsInfo.getYmin = function(){
+			return yMin;
+		};
+		gridsInfo.getYmax = function(){
+			return yMax;
+		};
 //		gridsInfo.GetMaxGrid = function(){
 //			gridsInfo.yMax = -1,
 //			gridsInfo.yMin = -1,

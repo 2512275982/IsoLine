@@ -1,46 +1,170 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="utf-8" />
 		<title>leaflet地图</title>
-		<link rel="stylesheet" type="text/css" href="css/basic/bootstrap.min.css" /> 
-	    <link rel="stylesheet" type="text/css" href="css/basic/swiper.min.css" />
-	    <link rel="stylesheet" href="css/basic/leaflet.css" />
-	    <link rel="stylesheet" href="css/basic/iconLayers.css" />
-	    
-	    <link rel="stylesheet" href="plugins/L.Control.BoxZoom/leaflet-control-boxzoom.css" />
-	    <link rel="stylesheet" href="plugins/L.Control.DefaultExtent/leaflet.defaultextent.css" />
-	    <link rel="stylesheet" href="plugins/L.Control.FullScreen/leaflet.fullscreen.css" />
-	    
-	    <script src="js/basic/jquery-2.2.4.min.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="css/basic/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/basic/swiper.min.css" />
+		<link rel="stylesheet" href="css/basic/leaflet.css" />
+		<link rel="stylesheet" href="css/basic/iconLayers.css" />
+
+		<link rel="stylesheet" href="plugins/L.Control.BoxZoom/leaflet-control-boxzoom.css" />
+		<link rel="stylesheet" href="plugins/L.Control.DefaultExtent/leaflet.defaultextent.css" />
+		<link rel="stylesheet" href="plugins/L.Control.FullScreen/leaflet.fullscreen.css" />
+
+		<script src="js/basic/jquery-2.2.4.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/basic/leaflet.js"></script>
 		<script src="js/leafletPlugins/leaflet.ChineseTmsProviders.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/leafletPlugins/provider.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/leafletPlugins/iconLayers.js" type="text/javascript" charset="utf-8"></script>
-		
+
 		<script src="plugins/L.Control.BoxZoom/leaflet-control-boxzoom.js" type="text/javascript" charset="utf-8"></script>
 		<script src="plugins/L.Control.DefaultExtent/leaflet.defaultextent.js" type="text/javascript" charset="utf-8"></script>
 		<script src="plugins/L.Control.FullScreen/Leaflet.fullscreen.min.js" type="text/javascript" charset="utf-8"></script>
-		
+
 		<script src="js/leafletPlugins/coordtransforms.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/Hykj/transObjs.js" type="text/javascript" charset="utf-8"></script>
-		
+
 		<script src="js/Hykj/ContourLine/PointInfoClass.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/Hykj/ContourLine/GridClass.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/Hykj/ContourLine/IsoSurface.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/Hykj/ContourLine/ContourLine.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/Hykj/ContourLine/Delauney.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/Hykj/ContourLine/GridIsoLine.js" type="text/javascript" charset="utf-8"></script>
-		
-		<script src="js/TestIsoline.js" type="text/javascript" charset="utf-8"></script>
+
+		<script src="js/TestMap.js" type="text/javascript" charset="utf-8"></script>
 		<style type="text/css">
-			#map { height: 800px; }
+			#map {
+				height: 660px;
+			}
+			
+			.button {
+				background-color: #4CAF50;
+				/* Green */
+				position: relative;
+				float: left;
+				z-index: 999999;
+				width: 95px;
+				border: none;
+				border-radius: 8px;
+				color: white;
+				padding: 15px 30px;
+				text-align: center;
+				text-decoration: none;
+				display: inline-block;
+				font-size: 16px;
+				margin: 2px 2px;
+				-webkit-transition-duration: 0.4s;
+				/* Safari */
+				transition-duration: 0.4s;
+				cursor: pointer;
+			}
+			
+			.button1 {
+				background-color: white;
+				position: absolute;
+				right: 560px;
+				top: 5px;
+				color: black;
+				border: 2px solid #4CAF50;
+			}
+			
+			.button1:hover {
+				background-color: #4CAF50;
+				color: white;
+			}
+			
+			.button2 {
+				background-color: white;
+				position: absolute;
+				right: 460px;
+				top: 5px;
+				color: black;
+				border: 2px solid #008CBA;
+			}
+			
+			.button2:hover {
+				background-color: #008CBA;
+				color: white;
+			}
+			
+			.button3 {
+				background-color: white;
+				position: absolute;
+				right: 360px;
+				top: 5px;
+				color: black;
+				border: 2px solid #f44336;
+			}
+			
+			.button3:hover {
+				background-color: #f44336;
+				color: white;
+			}
+			
+			.button4 {
+				background-color: white;
+				position: absolute;
+				right: 260px;
+				top: 5px;
+				color: black;
+				border: 2px solid #e7e7e7;
+			}
+			
+			.button4:hover {
+				background-color: #e7e7e7;
+			}
+			
+			.button5 {
+				background-color: white;
+				position: absolute;
+				right: 160px;
+				top: 5px;
+				color: black;
+				border: 2px solid #555555;
+			}
+			
+			.button5:hover {
+				background-color: #555555;
+				color: white;
+			}
+			
+			.button6 {
+				background-color: white;
+				position: absolute;
+				right: 60px;
+				top: 5px;
+				color: black;
+				border: 2px solid #EEEE00;
+			}
+			
+			.button6:hover {
+				background-color: #EEEE00;
+				color: white;
+			}
 		</style>
 	</head>
-	<body">
-		<div id="map"></div>
+
+	<body>
+		<div id="map">
+			<button class="button button1 " id="btn1 " onclick="showSO2() ">SO2</button>
+			<button class="button button2 " onclick="showCO() ">CO</button>
+			<button class="button button3 " onclick="showO3() ">O3</button>
+			<button class="button button4 " onclick="showPM25() ">PM2.5</button>
+			<button class="button button5 " onclick="showPM10() ">PM10</button>
+			<button class="button button6 " id="btn6 " onclick="showNO2() ">NO2</button>
+			
+		</div>
+		<div>
+			<button id="CYD"  onclick="CYD()">采样点</button>
+			<button id="DZX" onclick="DZX()">等值线</button>
+			<button id="SBT" onclick="SBT()">色斑图</button>
+		</div>
 	</body>
-	<script type="text/javascript">
-		LeafletMap.InitMap();
+	<script type="text/javascript ">
+		initMap();
+		//		LeafletMap.InitMap();
 	</script>
+	 
 </html>

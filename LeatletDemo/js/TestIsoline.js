@@ -19,69 +19,95 @@ var LeafletMap = (function() {
 		L.Control.boxzoom({ position: 'topleft' }).addTo(map);
 		L.control.defaultExtent().addTo(map);
 
-		getDataFromJson();
+//		getDataFromJson();
 	};
+	
+	var v=document.getElementsByClassName("button button1");
+	v.onclick=showSo2;
+	
+	var showSo2 = function(){
+		getDataFromJson("NO2");
+	}
 
 	/*
 	 * 初始化网格数据格式，传入的值为经纬度以及Z值的列表
 	 */
-	var gridOrignPnts = function(listData) {
+	var gridOrignPnts = function(listData,dataType) {
 		var listGridOrignPnts = new Array();
 		listData.forEach(function(item) {
-			if(item.longitude < 110.35 || item.longitude > 116.65) {
-				return true;
-			}
-			if(item.latitude < 31.383 || item.latitude > 36.37) {
-				return true;
-			}
-			if(/^5./.test(item.stationID)){  //匹配以5开头的国家站
-				var pntClass = new PointInfo(item.longitude, item.latitude, item.eValue);
-				listGridOrignPnts.push(pntClass);
-			}
+//			if(item.longitude < 110.35 || item.longitude > 116.65) {
+//				return true;
+//			}
+//			if(item.latitude < 31.383 || item.latitude > 36.37) {
+//				return true;
+//			}
+//			if(/^5./.test(item.stationID)){  //匹配以5开头的国家站
+//				var pntClass = new PointInfo(item.longitude, item.latitude, item.eValue);
+//				listGridOrignPnts.push(pntClass);
+//			}
+
+			var pntClass = new PointInfo(item.longitude, item.latitude, item[dataType]);
+			listGridOrignPnts.push(pntClass);
 		});
 		return listGridOrignPnts;
 	};
 
-	var getDataFromJson = function() {
-		var htmlobj = $.ajax({
-			url: "http://218.28.7.251:10525/hnqxjson/QxSqlInter/findDataSetOnDataType.hd?dataType=1-3-2&cityCode=HN",
-			async: false,
-			success: function() {
-				setTimeout(function() {}, 1);
-			}
+	var getDataFromJson = function(dataType) {
+		$.getJSON("./js/Hykj/ContourLine/test.json", function (data){
+			var listData = gridOrignPnts(data,dataType);
+			var pm25Colors = new Array();
+			var interpolateFeatures = ContourLine.createNew().BandLayer(listData, pm25Colors); //温度色斑图配置文件一项，选择哪种数据类型，都是同样的显示效果
+			interpolateFeatures.addTo(map);
 		});
-		var listObj = JSON.parse(htmlobj.responseText).list;
+	};
+	
+//	var getDataFromJson = function() {
+//		var htmlobj = $.ajax({
+//			url: "http://218.28.7.251:10525/hnqxjson/QxSqlInter/findDataSetOnDataType.hd?dataType=1-3-2&cityCode=HN",
+//			async: false,
+//			success: function() {
+//				setTimeout(function() {}, 1);
+//			}
+//		});
+//		var listObj = JSON.parse(htmlobj.responseText).list;
+		
+//		$.getJSON("./js/Hykj/ContourLine/test.json", function (data){
+//			var listData = gridOrignPnts(data);
+//			var pm25Colors = new Array();
+//			var interpolateFeatures = ContourLine.createNew().BandLayer(listData, pm25Colors); //温度色斑图配置文件一项，选择哪种数据类型，都是同样的显示效果
+//			interpolateFeatures.addTo(map);
+//		});
 
-		var pm25Colors = new Array();
-		pm25Colors.push({
-			value: 8,
-			color: '#00E400'
-		});
-		pm25Colors.push({
-			value: 9,
-			color: '#FFFF00'
-		});
-		pm25Colors.push({
-			value: 10,
-			color: '#FF7E00'
-		});
-		pm25Colors.push({
-			value: 11,
-			color: '#FF0000'
-		});
-		pm25Colors.push({
-			value: 12,
-			color: '#99004C'
-		});
+//		var pm25Colors = new Array();
+//		pm25Colors.push({
+//			value: 8,
+//			color: '#00E400'
+//		});
+//		pm25Colors.push({
+//			value: 9,
+//			color: '#FFFF00'
+//		});
+//		pm25Colors.push({
+//			value: 10,
+//			color: '#FF7E00'
+//		});
+//		pm25Colors.push({
+//			value: 11,
+//			color: '#FF0000'
+//		});
+//		pm25Colors.push({
+//			value: 12,
+//			color: '#99004C'
+//		});
 //		pm25Colors.push({
 //			value: 14,
 //			color: '#7E0023'
 //		});
 
-		var listData = gridOrignPnts(listObj);
-		var interpolateFeatures = ContourLine.createNew().BandLayer(listData, pm25Colors); //温度色斑图配置文件一项，选择哪种数据类型，都是同样的显示效果
-		interpolateFeatures.addTo(map);
-	};
+//		var listData = gridOrignPnts(listObj);
+//		var interpolateFeatures = ContourLine.createNew().BandLayer(listData, pm25Colors); //温度色斑图配置文件一项，选择哪种数据类型，都是同样的显示效果
+//		interpolateFeatures.addTo(map);
+//	};
 
 	return {
 		InitMap: initMap

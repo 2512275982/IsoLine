@@ -11,18 +11,34 @@ var GridIsoSurface = {
 		 * var list = new Array(); list.push({value: 9,color: '#00E400'});
 		 * 输出结果：多边形数组，PolygonInfoClass对象数组
 		 */
-		gridIsoSurface.WikiIsosurface = function(listContourValues) {
+//		gridIsoSurface.WikiIsosurface = function(listContourValues) {
+//			listPolys.splice(0, listPolys.length); //清空数组
+//			for(var i = 0; i < listContourValues.length; i++) {
+//				var min, max;
+//				if(i === listContourValues.length - 1) {
+//					min = listContourValues[i].value;
+//					max = listContourValues[i].value * 50;
+//				} else {
+//					min = listContourValues[i].value;
+//					max = listContourValues[i + 1].value;
+//				}
+//				GetContourBand(min, max, listContourValues[i].color);
+//			}
+//			return listPolys;
+//		};
+		
+		gridIsoSurface.WikiIsosurface = function(splitValues,splitColors) {
 			listPolys.splice(0, listPolys.length); //清空数组
-			for(var i = 0; i < listContourValues.length; i++) {
+			for(var i = 0; i < splitValues.length; i++) {
 				var min, max;
-				if(i === listContourValues.length - 1) {
-					min = listContourValues[i].value;
-					max = listContourValues[i].value * 50;
+				if(i === splitValues.length - 1) {
+					min = splitValues[i];
+					max = splitValues[i] * 50;
 				} else {
-					min = listContourValues[i].value;
-					max = listContourValues[i + 1].value;
+					min = splitValues[i];
+					max = splitValues[i + 1];
 				}
-				GetContourBand(min, max, listContourValues[i].color);
+				GetContourBand(min, max, splitColors[i]);
 			}
 			return listPolys;
 		};
