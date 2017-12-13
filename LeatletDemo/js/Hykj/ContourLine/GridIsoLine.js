@@ -106,12 +106,13 @@ var GridIsoline = {
 							
 							for(var j = 0;j<listClass2.length; j++){
 								ringCompare = listClass2[j];
-								if(ringCompare.isoRing.JudgePntInRing(pntFrom)){
-									
+								if(!ringCompare.isoRing.JudgePntInRing(pntFrom)){ //将大的放在前面
+									listClass2.splice(j,0,isoRing);  
+									break;
 								}
 							}
 							
-							//以线的起始点判断是否包含关系
+							//以线的起始点判断是否包含关系，替换为上面的方法，更好理解
 //							for(var j = 0;j<listClass2.length; j++){
 //								lineCompare = listClass2[j];
 //								if(pntFrom.Y > lineCompare.GetLineFrom().Y && pntFrom.Y > lineCompare.GetLineEnd().Y){
