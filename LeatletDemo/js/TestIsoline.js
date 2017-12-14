@@ -35,16 +35,16 @@ var LeafletMap = (function() {
 	var gridOrignPnts = function(listData,dataType) {
 		var listGridOrignPnts = new Array();
 		listData.forEach(function(item) {
-//			if(item.longitude < 110.35 || item.longitude > 116.65) {
-//				return true;
-//			}
-//			if(item.latitude < 31.383 || item.latitude > 36.37) {
-//				return true;
-//			}
-//			if(/^5./.test(item.stationID)){  //匹配以5开头的国家站
-//				var pntClass = new PointInfo(item.longitude, item.latitude, item.eValue);
-//				listGridOrignPnts.push(pntClass);
-//			}
+			if(item.longitude < 110.35 || item.longitude > 116.65) {
+				return true;
+			}
+			if(item.latitude < 31.383 || item.latitude > 36.37) {
+				return true;
+			}
+			if(/^5./.test(item.stationID)){  //匹配以5开头的国家站
+				var pntClass = new PointInfo(item.longitude, item.latitude, item.eValue);
+				listGridOrignPnts.push(pntClass);
+			}
 
 			var pntClass = new PointInfo(item.longitude, item.latitude, item[dataType]);
 			listGridOrignPnts.push(pntClass);
@@ -52,31 +52,16 @@ var LeafletMap = (function() {
 		return listGridOrignPnts;
 	};
 
-	var getDataFromJson = function(dataType) {
-		$.getJSON("./js/Hykj/ContourLine/test.json", function (data){
-			var listData = gridOrignPnts(data,dataType);
-			var pm25Colors = new Array();
-			var interpolateFeatures = ContourLine.createNew().BandLayer(listData, pm25Colors); //温度色斑图配置文件一项，选择哪种数据类型，都是同样的显示效果
-			interpolateFeatures.addTo(map);
-		});
-	};
 	
-//	var getDataFromJson = function() {
-//		var htmlobj = $.ajax({
-//			url: "http://218.28.7.251:10525/hnqxjson/QxSqlInter/findDataSetOnDataType.hd?dataType=1-3-2&cityCode=HN",
-//			async: false,
-//			success: function() {
-//				setTimeout(function() {}, 1);
-//			}
-//		});
-//		var listObj = JSON.parse(htmlobj.responseText).list;
-		
-//		$.getJSON("./js/Hykj/ContourLine/test.json", function (data){
-//			var listData = gridOrignPnts(data);
-//			var pm25Colors = new Array();
-//			var interpolateFeatures = ContourLine.createNew().BandLayer(listData, pm25Colors); //温度色斑图配置文件一项，选择哪种数据类型，都是同样的显示效果
-//			interpolateFeatures.addTo(map);
-//		});
+	var getDataFromJson = function() {
+		var htmlobj = $.ajax({
+			url: "http://218.28.7.251:10525/hnqxjson/QxSqlInter/findDataSetOnDataType.hd?dataType=1-3-2&cityCode=HN",
+			async: false,
+			success: function() {
+				setTimeout(function() {}, 1);
+			}
+		});
+		var listObj = JSON.parse(htmlobj.responseText).list;
 
 //		var pm25Colors = new Array();
 //		pm25Colors.push({
@@ -104,10 +89,10 @@ var LeafletMap = (function() {
 //			color: '#7E0023'
 //		});
 
-//		var listData = gridOrignPnts(listObj);
-//		var interpolateFeatures = ContourLine.createNew().BandLayer(listData, pm25Colors); //温度色斑图配置文件一项，选择哪种数据类型，都是同样的显示效果
-//		interpolateFeatures.addTo(map);
-//	};
+		var listData = gridOrignPnts(listObj);
+		var interpolateFeatures = ContourLine.createNew().BandLayer(listData, pm25Colors); //温度色斑图配置文件一项，选择哪种数据类型，都是同样的显示效果
+		interpolateFeatures.addTo(map);
+	};
 
 	return {
 		InitMap: initMap

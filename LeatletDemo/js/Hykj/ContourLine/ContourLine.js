@@ -54,15 +54,36 @@ var ContourLine = {
 			outLine.push(coord);
 			var polyg = L.polyline(outLine, { color: 'black' });
 			isolineLyr.addLayer(polyg);
-
+			
+			var sunCount = 0;
+			var txt = "";
+			var color = "black",weight = 1;
 			for(var i = 0; i < lineResults.length; i++) {
+				color = "black",weight = 1;
 				var lines = lineResults[i];
+				if(!lines.FinishState){
+					sunCount++;
+					var pntInfo = lines.GetLineFrom();
+//					coord = trans.PT([pntInfo.Y, pntInfo.X]);
+//					var circle = L.circle(coord, { radius: 2, fillColor: "red",fillOpacity:1,stroke:false }).bindTooltip(pntInfo.X+"  "+pntInfo.Y);
+//					isolineLyr.addLayer(circle);
+					txt += pntInfo.X+"  "+pntInfo.Y+"\r\n";
+					pntInfo = lines.GetLineEnd();
+//					coord = trans.PT([pntInfo.Y, pntInfo.X]);
+//					circle = L.circle(coord, { radius: 2, fillColor: "red",fillOpacity:1,stroke:false }).bindTooltip(pntInfo.X+"  "+pntInfo.Y);
+//					isolineLyr.addLayer(circle);
+					
+					txt += pntInfo.X+"  "+pntInfo.Y+"\r\n";
+					color = "red";
+					weight = 2;
+					continue;
+				}
 				var transLine = [];
 				lines.ListVertrix.forEach(function(pt, k) {
 					var coord = trans.PT([pt.Y, pt.X]);
 					transLine.push(coord);
 				})
-				var polyg = L.polyline(transLine, { color: 'black' });
+				var polyg = L.polyline(transLine, { color: color,weight:weight });
 				isolineLyr.addLayer(polyg);
 
 				var labelPnt = trans.PT([lines.Label.LabelPnt.Y, lines.Label.LabelPnt.X]);
@@ -73,6 +94,8 @@ var ContourLine = {
 				})
 				isolineLyr.addLayer(marker);
 			}
+			alert(sunCount);
+			alert(txt);
 			return isolineLyr;
 		};
 

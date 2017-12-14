@@ -60,13 +60,13 @@ var showO3 = function() {
 var showPM25 = function() {
 	splitValues = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105];
 	splitColors = ["#73BF00","#82D900","#8CEA00","#9AFF02","#A8FF24","#B7FF4A","#C2FF68","#CCFF80","#FFFFB9","#FFFF93","#FFAD86","#FF8F59","#FF5809","#D94600","#BB3D00","#A23400","#842B00","#642100","#750000","#600000","#4D0000","#2F0000"];
-	type = "PM25";
+	type = "pm25";
 //	showIsolines("PM25", splitValues);
 }
 var showPM10 = function() {
 	splitValues = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250, 260];
 	splitColors = ["#73BF00","#82D900","#8CEA00","#9AFF02","#A8FF24","#B7FF4A","#C2FF68","#CCFF80","#D3FF93","#FFFFB9","#FFFFAA","#FFFF93","#FFFF6F","#FFAD86","#FF9D6F","#FF8F59","#FF5809","#F75000","#D94600","#BB3D00","#A23400","842B00","642100","750000","600000","4D0000","2F0000"];
-	type = "PM10";
+	type = "pm10";
 //	showIsolines("PM10", splitValues);
 }
 

@@ -76,45 +76,51 @@ function IsoRing(vertries){
 }
 IsoRing.prototype = {
 	constructor : IsoRing,
-	//在多边形的末尾加上一个点
-	PushPoint : function(pntInfo){
-		this.listPolygonVertrix.push(pntInfo);
+	//在多边形的末尾加上一个点,(pnt)格式为[x,y]
+	PushPoint : function(pnt){
+		this.listPolygonVertrix.push(pnt);
 	},
-	//在多边形的开头加上一个点
-	UnshiftPoint : function(pntInfo){
+	//在多边形的开头加上一个点,(pnt)格式为[x,y]
+	UnshiftPoint : function(pnt){
 		this.listPolygonVertrix.unshift(pntInfo);
 	},
-	JudgePntInRing : function(pntInfo){
-		var count = this.vertries.length;
-			if(count < 3){
-				return false;
-			}
-			var p1,p2,dx;
-			var x1,y1,x2,y2,x,y;
-			var pSum = 0;
-			for(var i = 0;i<this.vertries.length;i++){
-				p1 = this.vertries[i];
-				x1 = p1[0],y1 = p1[1];
-				p2 = this.vertries[i+1];
-				x2 = p2[0],y2 = p2[1];
-				x = pnt.X,y = pnt.Y;
-				if(((y >= y1) && (y < y2)) || ((y >= y2)&&(y < y1))){
-					if(Math.abs(y1 - y2)>0){
-						dx = x1 - ((x1 - x2)*(y1-y))/(y1-y2);
-						if(dx<pnt.x){
-							pSum++;
-						}
+	//参数对象可以是一个，可以是两个。一个时传PointInfo对象，两个时传[x,y]坐标值
+	JudgePntInRing : function(){ 
+		 count = this.vertries.length;
+		if(count < 3){
+			return false;
+		}
+		var p1,p2,dx;
+		var x1,y1,x2,y2,x,y;
+		var pSum = 0;
+		if(arguments.length == 1){
+			x = arguments[0].X,y = arguments[0].Y;
+		}
+		else if(arguments.length == 2){
+			x = arguments[0],y = arguments[1];
+		}
+		for(var i = 0;i<this.vertries.length;i++){
+			p1 = this.vertries[i];
+			x1 = p1[0],y1 = p1[1];
+			p2 = this.vertries[i+1];
+			x2 = p2[0],y2 = p2[1];
+			if(((y >= y1) && (y < y2)) || ((y >= y2)&&(y < y1))){
+				if(Math.abs(y1 - y2)>0){
+					dx = x1 - ((x1 - x2)*(y1-y))/(y1-y2);
+					if(dx<pnt.x){
+						pSum++;
 					}
 				}
 			}
-			if((pSum%2)!=0){
-				return true;
-			}
-			return false;
+		}
+		if((pSum%2)!=0){
+			return true;
+		}
+		return false;
 	}
 }
 
-function IsoRingInfo(id,isoRing,value){
+function IsoRingInfo(isoRing,value){
 	this.isoRing = isoRing;
 	this.id = id;
 	this.value = value;
@@ -125,6 +131,9 @@ IsoRingInfo.prototype = {
 	constructor : IsoRingInfo,
 	AddChild : function(childRingId){
 		this.ringChidren.push(childRingId);
+	},
+	SetParent : function(parentRingId){
+		this.ringParent = parentRingId;
 	}
 }
 
@@ -159,10 +168,16 @@ var JudgePntInPolygon = function(pnt,polyPnts){
  * interRings:内部镂空多边形IsoRing数组，可由一个或多个组成
  */
 function IsoPolygonInfo(outerRings,interRings) {
+	if(arguments.length == 1){
+		this.outerRings = outerRings;
+		this.interRings = new Array();
+	}
+	else if(arguments.length == 2){
 		this.outerRings = outerRings;
 		this.interRings = interRings;
-		this.minValue = undefined;
-		this.maxValue = undefined;
+	}
+	this.minValue = undefined;
+	this.maxValue = undefined;
 }
 IsoPolygonInfo.prototype = {
 	constructor : IsoPolygonInfo,
