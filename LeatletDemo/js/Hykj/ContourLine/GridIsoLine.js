@@ -29,8 +29,8 @@ var GridIsoline = {
 					
 					tempLine.Label = GetLabelInfo(tempLine);
 					
-//					var pntss = BsLine(tempLine,10);
-//					tempLine.ListVertrix = pntss;
+					var pntss = BsLine(tempLine,10);
+					tempLine.ListVertrix = pntss;
 					listIsolines.push(tempLine);
 				}
 				tempIsolines.splice(0,tempIsolines.length);
@@ -81,8 +81,8 @@ var GridIsoline = {
 			
 			var  isoRing,isoRingInfo,ringId;
 			
-			for(var i=0;i<listIsolines.length;i++){
-				var line = lineResults[i];
+			for(var i=0;i<isolines.length;i++){
+				var line = isolines[i];
 				if(line.LineType){  //开放型
 					var pntFrom = line.GetLineFrom();
 					var pntEnd = line.GetLineEnd();
@@ -289,7 +289,7 @@ var GridIsoline = {
 					isoRing = new IsoRing(TransPntArrayToCoors(line.ListVertrix));
 					isoRingInfo = new IsoRingInfo(ringId,isoRing,line.LineValue);
 					
-					for(var j = listClass1.length - 1; j>=0; j++){
+					for(var j = listClass1.length - 1; j>=0; j--){
 						ringCompare = listClass1[j];
 						if(isoRing.JudgePntInRing(ringCompare.isoRing.vertries[0])){
 							listClass1.splice(j,0,isoRingInfo);
@@ -317,9 +317,9 @@ var GridIsoline = {
 			var isoPolygon;
 			for(var i = 0;i<listIsoRings.length;i++){
 				var ringValue = listIsoRings[i].value;
-				isoPolygon = IsoPolygonInfo(listIsoRings[i].isoRing);
+				isoPolygon = new IsoPolygonInfo(listIsoRings[i].isoRing);
 				
-				for(var index = i+1;indx<listIsoRings.length;index++){
+				for(var index = i+1;index<listIsoRings.length;index++){
 					var pnt = listIsoRings[index].isoRing.vertries[0];
 					if(listIsoRings[i].isoRing.JudgePntInRing(pnt)){
 						isoPolygon.AddInterRing(listIsoRings[index].isoRing);

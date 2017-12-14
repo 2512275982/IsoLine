@@ -78,11 +78,11 @@ IsoRing.prototype = {
 	constructor : IsoRing,
 	//在多边形的末尾加上一个点,(pnt)格式为[x,y]
 	PushPoint : function(pnt){
-		this.listPolygonVertrix.push(pnt);
+		this.vertries.push(pnt);
 	},
 	//在多边形的开头加上一个点,(pnt)格式为[x,y]
 	UnshiftPoint : function(pnt){
-		this.listPolygonVertrix.unshift(pntInfo);
+		this.vertries.unshift(pntInfo);
 	},
 	//参数对象可以是一个，可以是两个。一个时传PointInfo对象，两个时传[x,y]坐标值
 	JudgePntInRing : function(){ 
@@ -99,7 +99,7 @@ IsoRing.prototype = {
 		else if(arguments.length == 2){
 			x = arguments[0],y = arguments[1];
 		}
-		for(var i = 0;i<this.vertries.length;i++){
+		for(var i = 0;i<this.vertries.length-1;i++){
 			p1 = this.vertries[i];
 			x1 = p1[0],y1 = p1[1];
 			p2 = this.vertries[i+1];
@@ -107,7 +107,7 @@ IsoRing.prototype = {
 			if(((y >= y1) && (y < y2)) || ((y >= y2)&&(y < y1))){
 				if(Math.abs(y1 - y2)>0){
 					dx = x1 - ((x1 - x2)*(y1-y))/(y1-y2);
-					if(dx<pnt.x){
+					if(dx<x){
 						pSum++;
 					}
 				}
@@ -120,7 +120,7 @@ IsoRing.prototype = {
 	}
 }
 
-function IsoRingInfo(isoRing,value){
+function IsoRingInfo(id,isoRing,value){
 	this.isoRing = isoRing;
 	this.id = id;
 	this.value = value;
@@ -136,31 +136,6 @@ IsoRingInfo.prototype = {
 		this.ringParent = parentRingId;
 	}
 }
-
-var JudgePntInPolygon = function(pnt,polyPnts){
-			var count = polyPnts.length;
-			if(count < 4){
-				return false;
-			}
-			var p1,p2,dx;
-			var pSum = 0;
-			for(var i = 0;i<polyPnts.length;i++){
-				p1 = polyPnts[i];
-				p2 = polyPnts[i+1];
-				if(((pnt.Y >= p1.Y) && (pnt.Y < p2.Y)) || ((pnt.Y >= p2.Y)&&(pnt.Y<p1.Y))){
-					if(Math.abs(p1.Y - p2.Y)>0){
-						dx = p1.X - ((p1.X - p2.X)*(p1.Y-p.Y))/(p1.Y-p2.Y);
-						if(dx<pnt.x){
-							pSum++;
-						}
-					}
-				}
-			}
-			if((pSum%2)!=0){
-				return true;
-			}
-			return false;
-		}
 
 /*
  * 多边形，支持multiPolygon，由IsoRing组成

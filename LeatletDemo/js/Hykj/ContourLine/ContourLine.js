@@ -40,6 +40,15 @@ var ContourLine = {
 
 			var lines = GridIsoline.createNew(gridInfo);
 			var lineResults = lines.WikiIsoline(splitValues);
+			var yMax = gridClass.getYmax(),
+				yMin = gridClass.getYmin(),
+				xMax = gridClass.getXmax(),
+				xMin = gridClass.getXmin();
+			
+			var listPolys = lines.WikiIsolineBand(lineResults,yMax,yMin,xMax,xMin);
+			for(var index = 0;index < listPolys.length;index++){
+				var poly = listPolys[index];
+			}
 
 			var outLine = [];
 			var coord = trans.PT([gridClass.getYmin(), gridClass.getXmin()]);
