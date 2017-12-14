@@ -318,7 +318,6 @@ var GridIsoline = {
 			for(var i = 0;i<listIsoRings.length;i++){
 				var ringValue = listIsoRings[i].value;
 				isoPolygon = new IsoPolygonInfo(listIsoRings[i].isoRing);
-				
 				for(var index = i+1;index<listIsoRings.length;index++){
 					var pnt = listIsoRings[index].isoRing.vertries[0];
 					if(listIsoRings[i].isoRing.JudgePntInRing(pnt)){
