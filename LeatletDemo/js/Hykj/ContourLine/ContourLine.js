@@ -64,14 +64,14 @@ var ContourLine = {
 				if(!lines.FinishState){
 					sunCount++;
 					var pntInfo = lines.GetLineFrom();
-//					coord = trans.PT([pntInfo.Y, pntInfo.X]);
-//					var circle = L.circle(coord, { radius: 2, fillColor: "red",fillOpacity:1,stroke:false }).bindTooltip(pntInfo.X+"  "+pntInfo.Y);
-//					isolineLyr.addLayer(circle);
+					coord = trans.PT([pntInfo.Y, pntInfo.X]);
+					var circle = L.circle(coord, { radius: 2, fillColor: "red",fillOpacity:1,stroke:false }).bindTooltip(pntInfo.X+"  "+pntInfo.Y);
+					isolineLyr.addLayer(circle);
 					txt += pntInfo.X+"  "+pntInfo.Y+"\r\n";
 					pntInfo = lines.GetLineEnd();
-//					coord = trans.PT([pntInfo.Y, pntInfo.X]);
-//					circle = L.circle(coord, { radius: 2, fillColor: "red",fillOpacity:1,stroke:false }).bindTooltip(pntInfo.X+"  "+pntInfo.Y);
-//					isolineLyr.addLayer(circle);
+					coord = trans.PT([pntInfo.Y, pntInfo.X]);
+					circle = L.circle(coord, { radius: 2, fillColor: "red",fillOpacity:1,stroke:false }).bindTooltip(pntInfo.X+"  "+pntInfo.Y);
+					isolineLyr.addLayer(circle);
 					
 					txt += pntInfo.X+"  "+pntInfo.Y+"\r\n";
 					color = "red";
@@ -95,7 +95,6 @@ var ContourLine = {
 				isolineLyr.addLayer(marker);
 			}
 			alert(sunCount);
-			alert(txt);
 			return isolineLyr;
 		};
 

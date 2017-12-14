@@ -842,6 +842,10 @@ var GridIsoline = {
 				}
 				if(!matchFlag){    //如果没有找到匹配的等值线，则添加一条新的等值线
 					var isoline = new IsolineInfo(value);  
+//					if(lineFromPnt.X == 117.26428332857144 || lineToPnt.X== 117.26428332857144)
+//					{
+//						alert("1");
+//					}
 					isoline.AddPointInfo(lineFromPnt);
 					isoline.AddPointInfo(lineToPnt);
 					

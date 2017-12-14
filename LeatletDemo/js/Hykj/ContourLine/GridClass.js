@@ -14,7 +14,7 @@ var GridClass = {
 			xMax = -1,
 			xMin = -1;
 		
-		var gridStep = 100; //-----------该个数与等值线的生成个数应该一致，修改的时候请一同修改(包括下面的外扩个数)
+		var gridStep = 150; //-----------该个数与等值线的生成个数应该一致，修改的时候请一同修改(包括下面的外扩个数)
 		var extendGridNum = 2;
 		
 		var originas = { //提取数据，归纳分类
