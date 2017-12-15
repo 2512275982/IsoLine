@@ -94,10 +94,17 @@ IsoRing.prototype = {
 		var x1,y1,x2,y2,x,y;
 		var pSum = 0;
 		if(arguments.length == 1){
-			x = arguments[0].X,y = arguments[0].Y;
+			if(Array.isArray(arguments[0])){
+				x = arguments[0][0],y = arguments[0][1];
+			} else if(arguments[0] instanceof PointInfo){
+				x = arguments[0].X,y = arguments[0].Y;
+			}
 		}
 		else if(arguments.length == 2){
 			x = arguments[0],y = arguments[1];
+		}
+		if(this.vertries[0] != this.vertries[this.vertries.length-1]){
+			this.vertries.push(this.vertries[0]);
 		}
 		for(var i = 0;i<this.vertries.length-1;i++){
 			p1 = this.vertries[i];
@@ -124,17 +131,7 @@ function IsoRingInfo(id,isoRing,value){
 	this.isoRing = isoRing;
 	this.id = id;
 	this.value = value;
-	this.ringParent = undefined;
-	this.ringChidren = new Array();
-}
-IsoRingInfo.prototype = {
-	constructor : IsoRingInfo,
-	AddChild : function(childRingId){
-		this.ringChidren.push(childRingId);
-	},
-	SetParent : function(parentRingId){
-		this.ringParent = parentRingId;
-	}
+	this.parentValue = undefined;
 }
 
 /*

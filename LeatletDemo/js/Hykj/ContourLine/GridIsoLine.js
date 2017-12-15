@@ -79,10 +79,11 @@ var GridIsoline = {
 			var listClass10 = new Array();
 			var listClass11 = new Array();
 			
-			var  isoRing,isoRingInfo,ringId;
+			var  isoRing,isoRingInfo,ringId,needAdd;
 			
 			for(var i=0;i<isolines.length;i++){
 				var line = isolines[i];
+				needAdd = true;
 				if(line.LineType){  //开放型
 					var pntFrom = line.GetLineFrom();
 					var pntEnd = line.GetLineEnd();
@@ -116,129 +117,153 @@ var GridIsoline = {
 					var j;  //JavaScript不存在块作用域，所以此处声明和在for语句外声明效果一致
 					switch(type){
 						case "33":   //第2类
-							ringId = "33" + listClass2.length.toString();
+							ringId = "02" + listClass2.length.toString();
 							isoRing = new IsoRing(TransPntArrayToCoors(line.ListVertrix));
 							isoRingInfo = new IsoRingInfo(ringId,isoRing,line.LineValue);
 							
 							//以线的起始点判断是否包含关系，替换为以下判断是否包含的方法，更好理解
 							for(j = 0;j<listClass2.length; j++){
 								ringCompare = listClass2[j];
-								if(!ringCompare.isoRing.JudgePntInRing(pntFrom)){ //将大的放在前面
+								if(isoRing.JudgePntInRing(ringCompare.isoRing.vertries[1])){ //将大的放在前面
 									listClass2.splice(j,0,isoRingInfo);  
+									needAdd = false;
 									break;
 								}
 							}
-							listClass2.push(isoRingInfo);
+							if(needAdd){
+								listClass2.push(isoRingInfo);
+							}
 							break;
 						case "11":  //第3类
-							ringId = "11" + listClass3.length.toString();
+							ringId = "03" + listClass3.length.toString();
 							isoRing = new IsoRing(TransPntArrayToCoors(line.ListVertrix));
 							isoRingInfo = new IsoRingInfo(ringId,isoRing,line.LineValue);
 							
 							for(j = 0;j<listClass3.length;j++){
 								ringCompare = listClass3[j];
-								if(!ringCompare.isoRing.JudgePntInRing(pntFrom)){
+								if(isoRing.JudgePntInRing(ringCompare.isoRing.vertries[1])){
 									listClass3.splice(j,0,isoRingInfo);
+									needAdd = false;
 									break;
 								}
 							}
-							listClass3.push(isoRingInfo);
+							if(needAdd){
+								listClass3.push(isoRingInfo);
+							}
 							break;
 						case "44": //第4类
-							ringId = "44" + listClass4.length.toString();
+							ringId = "04" + listClass4.length.toString();
 							isoRing = new IsoRing(TransPntArrayToCoors(line.ListVertrix));
 							isoRingInfo = new IsoRingInfo(ringId,isoRing,line.LineValue);
 						
 							for(j = 0;j<listClass4.length;j++){
 								ringCompare = listClass4[j];
-								if(!ringCompare.isoRing.JudgePntInRing(pntFrom)){
+								if(isoRing.JudgePntInRing(ringCompare.isoRing.vertries[1])){
 									listClass4.splice(j,0,isoRingInfo);
+									needAdd = false;
 									break;
 								}
 							}
-							listClass4.push(isoRingInfo);
+							if(needAdd){
+								listClass4.push(isoRingInfo);
+							}
 							break;
 						case "22":  //第5类
-							ringId = "22" + listClass5.length.toString();
+							ringId = "05" + listClass5.length.toString();
 							isoRing = new IsoRing(TransPntArrayToCoors(line.ListVertrix));
 							isoRingInfo = new IsoRingInfo(ringId,isoRing,line.LineValue);
 						
 							for(j = 0;j<listClass5.length;j++){
 								ringCompare = listClass5[j];
-								if(!ringCompare.isoRing.JudgePntInRing(pntFrom)){
+								if(isoRing.JudgePntInRing(ringCompare.isoRing.vertries[1])){
 									listClass5.splice(j,0,isoRingInfo);
+									needAdd = false;
 									break;
 								}
 							}
-							listClass5.push(isoRingInfo);
+							if(needAdd){
+								listClass5.push(isoRingInfo);
+							}
 							break;
 						case "12":  //第6类
 						case "21":
-							ringId = "21" + listClass6.length.toString();
+							ringId = "06" + listClass6.length.toString();
 							isoRing = new IsoRing(TransPntArrayToCoors(line.ListVertrix));
 							isoRing.PushPoint([xMin,yMax]);  //第6类需要加上一个角点（左上角）
 							isoRingInfo = new IsoRingInfo(ringId,isoRing,line.LineValue);
 							
 							for(j = 0;j<listClass6.length;j++){
 								ringCompare = listClass6[j];
-								if(!ringCompare.isoRing.JudgePntInRing(pntFrom)){
+								if(isoRing.JudgePntInRing(ringCompare.isoRing.vertries[1])){
 									listClass6.splice(j,0,isoRingInfo);
+									needAdd = false;
 									break;
 								}
 							}
-							listClass6.push(isoRingInfo);
+							if(needAdd){
+								listClass6.push(isoRingInfo);
+							}
 							break;
 						case "14":  //第7类
 						case "41":
-							ringId = "41" + listClass7.length.toString();
+							ringId = "07" + listClass7.length.toString();
 							isoRing = new IsoRing(TransPntArrayToCoors(line.ListVertrix));
 							isoRing.PushPoint([xMin,yMin]);   //第7类需要加上一个角点（左下角）
 							isoRingInfo = new IsoRingInfo(ringId,isoRing,line.LineValue);
 							
 							for(j = 0;j<listClass7.length;j++){
 								ringCompare = listClass7[j];
-								if(!ringCompare.isoRing.JudgePntInRing(pntFrom)){
+								if(isoRing.JudgePntInRing(ringCompare.isoRing.vertries[1])){
 									listClass7.splice(j,0,isoRingInfo);
+									needAdd = false;
 									break;
 								}
 							}
-							listClass7.push(isoRingInfo);
+							if(needAdd){
+								listClass7.push(isoRingInfo);
+							}
 							break;
 						case "34":  //第8类
 						case "43":
-							ringId = "43" + listClass8.length.toString();
+							ringId = "08" + listClass8.length.toString();
 							isoRing = new IsoRing(TransPntArrayToCoors(line.ListVertrix));
 							isoRing.PushPoint([xMax,yMin]);   //第8类需要加上一个角点（右下角）
 							isoRingInfo = new IsoRingInfo(ringId,isoRing,line.LineValue);
 							
 							for(j = 0;j<listClass8.length;j++){
 								ringCompare = listClass8[j];
-								if(!ringCompare.isoRing.JudgePntInRing(pntFrom)){
+								if(isoRing.JudgePntInRing(ringCompare.isoRing.vertries[1])){
 									listClass8.splice(j,0,isoRingInfo);
+									needAdd = false;
 									break;
 								}
 							}
-							listClass8.push(isoRingInfo);
+							if(needAdd){
+								listClass8.push(isoRingInfo);
+							}
 							break;
 						case "23":   //第9类
 						case "32":
-							ringId = "32" + listClass9.length.toString();
+							ringId = "09" + listClass9.length.toString();
 							isoRing = new IsoRing(TransPntArrayToCoors(line.ListVertrix));
 							isoRing.PushPoint([xMax,yMax]);   //第9类需要加上一个角点（右上角）
 							isoRingInfo = new IsoRingInfo(ringId,isoRing,line.LineValue);
 							
 							for(j = 0;j<listClass9.length;j++){
 								ringCompare = listClass9[j];
-								if(!ringCompare.isoRing.JudgePntInRing(pntFrom)){
+								if(isoRing.JudgePntInRing(ringCompare.isoRing.vertries[1])){
 									listClass9.splice(j,0,isoRingInfo);
+									needAdd = false;
 									break;
 								}
 							}
-							listClass9.push(isoRingInfo);
+							if(needAdd){
+								listClass9.push(isoRingInfo);
+							}
 							break;
 						case "13":  //第10类
 						case "31":
-							ringId = "31" + listClass10.length.toString();
+							ringId = "10" + listClass10.length.toString();
 							isoRing = new IsoRing(TransPntArrayToCoors(line.ListVertrix));
 							if(Math.abs(line.GetLineEnd().X - xMin) < 0.000001){  //第10类，差两个点，需要考虑添加的顺序
 								isoRing.PushPoint([xMin,yMin]);
@@ -252,16 +277,19 @@ var GridIsoline = {
 							
 							for(var j = 0;j<listClass10.length;j++){
 								ringCompare = listClass10[j];
-								if(!ringCompare.isoRing.JudgePntInRing(pntFrom)){
+								if(isoRing.JudgePntInRing(ringCompare.isoRing.vertries[1])){
 									listClass10.splice(j,0,isoRingInfo);
+									needAdd = false;
 									break;
 								}
 							}
-							listClass10.push(isoRingInfo);
+							if(needAdd){
+								listClass10.push(isoRingInfo);
+							}
 							break;
 						case "24":  //第11类
 						case "42":
-							ringId = "42" + listClass11.length.toString();
+							ringId = "11" + listClass11.length.toString();
 							isoRing = new IsoRing(TransPntArrayToCoors(line.ListVertrix));
 							if(Math.abs(line.GetLineEnd().Y - yMin) < 0.000001){  //第11类，差两个点，需要考虑添加的顺序
 								isoRing.PushPoint([xMin,yMin]);
@@ -275,27 +303,34 @@ var GridIsoline = {
 							
 							for(var j = 0;j<listClass11.length;j++){
 								ringCompare = listClass11[j];
-								if(!ringCompare.isoRing.JudgePntInRing(pntFrom)){
+								if(isoRing.JudgePntInRing(ringCompare.isoRing.vertries[1])){
 									listClass11.splice(j,0,isoRingInfo);
+									needAdd = false;
 									break;
 								}
 							}
-							listClass11.push(isoRingInfo);
+							if(needAdd){
+								listClass11.push(isoRingInfo);
+							}
 							break;
 					}
 				}
 				else{   //闭合型，反向遍历，第1类
-					ringId = "99" + listClass1.length.toString();
+					ringId = "01" + listClass1.length.toString();
 					isoRing = new IsoRing(TransPntArrayToCoors(line.ListVertrix));
 					isoRingInfo = new IsoRingInfo(ringId,isoRing,line.LineValue);
 					
-					for(var j = listClass1.length - 1; j>=0; j--){
+					for(var j = 0; j<listClass1.length; j++){
 						ringCompare = listClass1[j];
 						if(isoRing.JudgePntInRing(ringCompare.isoRing.vertries[0])){
 							listClass1.splice(j,0,isoRingInfo);
+							needAdd = false;
+							break;
 						}
 					}
-					listClass1.push(isoRingInfo);
+					if(needAdd){
+						listClass1.push(isoRingInfo);
+					}
 				}
 				ringCompare = null;
 			}
@@ -315,21 +350,40 @@ var GridIsoline = {
 		var GetIsoBands = function(listIsoRings){
 			var listIsoPolys = new Array();
 			var isoPolygon;
-			for(var i = 0;i<listIsoRings.length;i++){
+			var needAdd;
+			for(var i = 0;i<listIsoRings.length;i++){  //循环遍历每一个多边形，找到直接子多边形
 				var ringValue = listIsoRings[i].value;
 				isoPolygon = new IsoPolygonInfo(listIsoRings[i].isoRing);
 				for(var index = i+1;index<listIsoRings.length;index++){
-					var pnt = listIsoRings[index].isoRing.vertries[0];
-					if(listIsoRings[i].isoRing.JudgePntInRing(pnt)){
-						isoPolygon.AddInterRing(listIsoRings[index].isoRing);
-						if(ringValue > listIsoRings[index].value)
-						{
-							isoPolygon.maxValue = ringValue;
+					var pnt = listIsoRings[index].isoRing.vertries[1];
+					if(listIsoRings[i].isoRing.JudgePntInRing(pnt)){ //判断多边形是否是目标多边形的子多边形
+						needAdd = true;
+						for(var j = 0;j < isoPolygon.interRings.length;j++){
+							if(isoPolygon.interRings[j].JudgePntInRing(pnt)){
+								needAdd = false;
+								break;
+							}
 						}
-						else if(ringValue < listIsoRings[index].value){
-							isoPolygon.minValue = ringValue;
+						if(needAdd){
+							isoPolygon.AddInterRing(listIsoRings[index].isoRing);
+							listIsoRings[index].parentValue = ringValue;
+							if(ringValue > listIsoRings[index].value)
+							{
+								isoPolygon.maxValue = ringValue;
+							}
+							else if(ringValue < listIsoRings[index].value){
+								isoPolygon.minValue = ringValue;
+							}
 						}
 					}
+				}
+				if(isoPolygon.interRings.length == 0){
+					if(ringValue>listIsoRings[i].parentValue){
+						isoPolygon.minValue = ringValue;
+					}else{
+						isoPolygon.maxValue = ringValue;
+					}
+					
 				}
 				listIsoPolys.push(isoPolygon);
 			}

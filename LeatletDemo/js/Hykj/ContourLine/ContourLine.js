@@ -48,6 +48,33 @@ var ContourLine = {
 			var listPolys = lines.WikiIsolineBand(lineResults,yMax,yMin,xMax,xMin);
 			for(var index = 0;index < listPolys.length;index++){
 				var poly = listPolys[index];
+				if(poly.maxValue == undefined && poly.minValue == undefined){
+//				if((poly.maxValue == poly.minValue) && (poly.maxValue != undefined) ){
+					var transLine = [];
+					poly.outerRings.vertries.forEach(function(pt, k) {
+						var coord = trans.PT([pt[1], pt[0]]);
+						transLine.push(coord);
+					})
+					var polyg = L.polyline(transLine, { color: "red"});
+					isolineLyr.addLayer(polyg);
+
+					for(var ii = 0;ii<poly.interRings.length;ii++){
+						transLine = [];
+						poly.interRings[ii].vertries.forEach(function(pt, k) {
+							var coord = trans.PT([pt[1], pt[0]]);
+							transLine.push(coord);
+						})
+						var polyg = L.polyline(transLine, { color: "red"});
+						isolineLyr.addLayer(polyg);
+					}
+					
+					var marker = L.marker(transLine[0], {
+						icon: L.divIcon({
+							html: '<div style="font-size:14px;color:#FF0000">' + index + '</div>'
+						}),
+					})
+					isolineLyr.addLayer(marker);
+				}
 			}
 
 			var outLine = [];
