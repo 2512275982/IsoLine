@@ -13,7 +13,7 @@ PointInfo.prototype = {
 	constructor : PointInfo,
 	Equals : function(pntOther){
 		if(pntOther instanceof PointInfo){
-			if(Math.abs(pntOther.X - this.X) < 0.000000001 && Math.abs(pntOther.Y - this.Y) <0.000000001){
+			if(Math.abs(pntOther.X - this.X) < 0.00000001 && Math.abs(pntOther.Y - this.Y) <0.00000001){
 				return true;
 			}
 			else{

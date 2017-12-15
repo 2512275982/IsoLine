@@ -334,7 +334,12 @@ var GridIsoline = {
 				}
 				ringCompare = null;
 			}
-			var listIsoRings = listClass11.concat(listClass10,listClass9,listClass8,listClass7,listClass6,listClass5,listClass4,listClass3,listClass2,listClass1);
+			
+			ringId = "0000";  //添加最外圈矩形
+			isoRing = new IsoRing([[xMax,yMax],[xMax,yMin],[xMin,yMin],[xMin,yMax]]);
+			isoRingInfo = new IsoRingInfo(ringId,isoRing);
+			
+			var listIsoRings = listClass11.concat(isoRingInfo,listClass10,listClass9,listClass8,listClass7,listClass6,listClass5,listClass4,listClass3,listClass2,listClass1);
 			listClass1 = null;  //释放内存的操作
 			listClass10 = null;
 			listClass11 = null,listClass2 = null,listClass3 = null,listClass4 = null;
@@ -366,13 +371,19 @@ var GridIsoline = {
 						}
 						if(needAdd){
 							isoPolygon.AddInterRing(listIsoRings[index].isoRing);
-							listIsoRings[index].parentValue = ringValue;
-							if(ringValue > listIsoRings[index].value)
+							if(ringValue != undefined)
 							{
-								isoPolygon.maxValue = ringValue;
+								listIsoRings[index].parentValue = ringValue;
+								if(ringValue > listIsoRings[index].value)
+								{
+									isoPolygon.maxValue = ringValue;
+								}
+								else if(ringValue < listIsoRings[index].value){
+									isoPolygon.minValue = ringValue;
+								}
 							}
-							else if(ringValue < listIsoRings[index].value){
-								isoPolygon.minValue = ringValue;
+							else{
+								ringValue = listIsoRings[index].value;
 							}
 						}
 					}

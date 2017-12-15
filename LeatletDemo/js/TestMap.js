@@ -30,49 +30,50 @@ var initMap = function() {
 
 //展示等值线
 var showSO2 = function() {
-	splitValues = [0, 50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750];
+	splitValues = [50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750];
 	splitColors = ["#73BF00","#82D900","#8CEA00","#9AFF02","#A8FF24","#CCFF80","#FFFFB9","#FFFFAA","#FFFF6F","#FF8F59","#FF5809","#D94600","#A23400","#642100","#600000","#2F0000"];
 	type = "SO2";
 //	showIsolines("SO2", splitValues);
 }
 
 var showNO2 = function() {
-	splitValues = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250, 260, 270];
+	splitValues = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250, 260, 270];
 	splitColors = ["#73BF00","#82D900","#8CEA00","#9AFF02","#A8FF24","#B7FF4A","#C2FF68","#CCFF80","#D3FF93","#FFFFB9","#FFFFAA","#FFFF93","#FFFF6F","#FFAD86","#FF9D6F","#FF8F59","#FF8040","#FF5809","#F75000","#D94600","#BB3D00","#A23400","#842B00","#642100","#750000","#600000","#4D0000","#2F0000"];
 	type = "NO2";
 //	showIsolines("NO2", splitValues);
 }
 
 var showCO = function() {
-	splitValues = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+	splitValues = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 	splitColors = ["#73BF00","#82D900","#9AFF02","#A8FF24","#C2FF68","#CCFF80","#FF5809","#D94600","#A23400","#842B00","#750000","#600000","#2F0000"];
 	type = "CO";
 //	showIsolines("CO", splitValues);
 }
 
 var showO3 = function() {
-	splitValues = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240];
+	splitValues = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240];
 	splitColors = ["#73BF00","#82D900","#8CEA00","#9AFF02","#A8FF24","#B7FF4A","#C2FF68","#CCFF80","#D3FF93","#FFFFAA","#FFFF93","#FFFF6F","#FF9D6F","#FF5809","#F75000","#BB3D00","#A23400","#842B00","#642100","#750000","#600000","#4D0000","#2F0000"];
 	type = "O3";
 //	showIsolines("O3", splitValues);
 }
 
 var showPM25 = function() {
-	splitValues = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105];
-	splitColors = ["#73BF00","#82D900","#8CEA00","#9AFF02","#A8FF24","#B7FF4A","#C2FF68","#CCFF80","#FFFFB9","#FFFF93","#FFAD86","#FF8F59","#FF5809","#D94600","#BB3D00","#A23400","#842B00","#642100","#750000","#600000","#4D0000","#2F0000"];
+	splitValues = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105];
+	splitColors = ["#01fd04","#1bfb04","#33fd00","#49fe04","#5fff00","#7afe00","#95fc01","#a9fe08","#c2fd06","#ddfd00","#f3fe01","#fbe300","#fca700","#fc6801","#fb2909","#f80006","#d60004","#ba0001","#990001","#770100","#3a0000","#000000"];
 	type = "pm25";
 //	showIsolines("PM25", splitValues);
 }
 var showPM10 = function() {
-	splitValues = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250, 260];
+	splitValues = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250, 260];
 	splitColors = ["#73BF00","#82D900","#8CEA00","#9AFF02","#A8FF24","#B7FF4A","#C2FF68","#CCFF80","#D3FF93","#FFFFB9","#FFFFAA","#FFFF93","#FFFF6F","#FFAD86","#FF9D6F","#FF8F59","#FF5809","#F75000","#D94600","#BB3D00","#A23400","842B00","642100","750000","600000","4D0000","2F0000"];
+//	alert(splitValues.length + "  " + splitColors.length);
 	type = "pm10";
 //	showIsolines("PM10", splitValues);
 }
 
-var showIsolines = function(dataType, splitValues) {
+var showIsolines = function(dataType, splitValues, splitColors) {
 	var listData = gridOrignPnts(airData, dataType);
-	var interpolateFeatures = contourLine.IsoLineLayer(listData, splitValues);
+	var interpolateFeatures = contourLine.IsoLineLayer(listData, splitValues, splitColors);
 	interpolateFeatures.addTo(map);
 };
 
@@ -92,7 +93,7 @@ var showIsoPnts = function(dataType, splitValues, splitColors) {
  * 控制显示等值线与色斑图
  */
 function DZX() { 
-	showIsolines(type,splitValues);
+	showIsolines(type,splitValues, splitColors);
 //	if(map.hasLayer(contourLine.getIsolineLyr())) {
 //		map.removeLayer(contourLine.getIsolineLyr());
 //	} else {
