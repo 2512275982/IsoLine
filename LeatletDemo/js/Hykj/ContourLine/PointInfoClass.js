@@ -35,6 +35,8 @@ function IsolineInfo(value){
 	this.FinishState = false;   //等值线是否完成追踪 
 	this.LineValue = value;  //等值线值
 	this.Label = undefined;
+//	this.FromPnt = undefined;
+//	this.EndPnt = undefined;
 }
 
 IsolineInfo.prototype = {
@@ -42,16 +44,22 @@ IsolineInfo.prototype = {
 	AddPointInfo : function(pntInfo,index){
 		if(index === 0){
 			this.ListVertrix.unshift(pntInfo);
+//			this.FromPnt = pntInfo;
 		}
 		else{
 			this.ListVertrix.push(pntInfo);
+//			if(this.FromPnt == undefined){
+//				this.FromPnt = pntInfo;
+//			} else {
+//				this.EndPnt = pntInfo;
+//			}
 		}
 	},
 	GetLineFrom : function(){
 		return this.ListVertrix[0];
 	},
 	GetLineEnd : function(){
-		return this.ListVertrix[this.ListVertrix.length-1];
+		return this.ListVertrix[this.ListVertrix.length - 1];
 	}
 }
 

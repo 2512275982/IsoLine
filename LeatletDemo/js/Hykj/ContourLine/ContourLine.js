@@ -45,41 +45,41 @@ var ContourLine = {
 				xMax = gridClass.getXmax(),
 				xMin = gridClass.getXmin();
 			
-			var listPolys = lines.WikiIsolineBand(lineResults,yMax,yMin,xMax,xMin);
-			var polyColor,poly;
-			for(var index = 0;index < listPolys.length;index++){
-				poly = listPolys[index];
-				if(poly.maxValue !== undefined){
-					polyColor = splitColors[splitValues.indexOf(poly.maxValue)+1];
-				} else {
-					polyColor = splitColors[splitValues.indexOf(poly.minValue)];
-				}
-
-				var outRingCoors = [];
-				poly.outerRings.vertries.forEach(function(pt, k) {
-					var coord = trans.PT([pt[1], pt[0]]);
-					outRingCoors.push(coord);
-				})
-				if(poly.interRings.length>0){
-					var polyCoord = new Array();
-					polyCoord.push(outRingCoors);
-					
-					for(var ii = 0;ii<poly.interRings.length;ii++){
-						var interRings = [];
-						poly.interRings[ii].vertries.forEach(function(pt, k) {
-							var coord = trans.PT([pt[1], pt[0]]);
-							interRings.push(coord);
-						})
-						polyCoord.push(interRings);
-					}
-					var polygon = L.polygon(polyCoord, {stroke:true,opacity:0.7,fillOpacity:0.9,color: polyColor});
-					isolineLyr.addLayer(polygon);
-				}
-				else{
-					var polygon = L.polygon(outRingCoors, {stroke:true,opacity:0.7,fillOpacity:0.9,color: polyColor});
-					isolineLyr.addLayer(polygon);
-				}
-			}
+//			var listPolys = lines.WikiIsolineBand(lineResults,yMax,yMin,xMax,xMin);
+//			var polyColor,poly;
+//			for(var index = 0;index < listPolys.length;index++){
+//				poly = listPolys[index];
+//				if(poly.maxValue !== undefined){
+//					polyColor = splitColors[splitValues.indexOf(poly.maxValue)+1];
+//				} else {
+//					polyColor = splitColors[splitValues.indexOf(poly.minValue)];
+//				}
+//
+//				var outRingCoors = [];
+//				poly.outerRings.vertries.forEach(function(pt, k) {
+//					var coord = trans.PT([pt[1], pt[0]]);
+//					outRingCoors.push(coord);
+//				})
+//				if(poly.interRings.length>0){
+//					var polyCoord = new Array();
+//					polyCoord.push(outRingCoors);
+//					
+//					for(var ii = 0;ii<poly.interRings.length;ii++){
+//						var interRings = [];
+//						poly.interRings[ii].vertries.forEach(function(pt, k) {
+//							var coord = trans.PT([pt[1], pt[0]]);
+//							interRings.push(coord);
+//						})
+//						polyCoord.push(interRings);
+//					}
+//					var polygon = L.polygon(polyCoord, {stroke:true,opacity:0.7,fillOpacity:0.9,color: polyColor});
+//					isolineLyr.addLayer(polygon);
+//				}
+//				else{
+//					var polygon = L.polygon(outRingCoors, {stroke:true,opacity:0.7,fillOpacity:0.9,color: polyColor});
+//					isolineLyr.addLayer(polygon);
+//				}
+//			}
 
 			var outLine = [];
 			var coord = trans.PT([gridClass.getYmin(), gridClass.getXmin()]);
@@ -95,46 +95,46 @@ var ContourLine = {
 			var polyg = L.polyline(outLine, { color: 'black' });
 			isolineLyr.addLayer(polyg);
 			
-//			var sunCount = 0;
-//			var txt = "";
-//			var color = "black",weight = 1;
-//			for(var i = 0; i < lineResults.length; i++) {
-//				color = "black",weight = 1;
-//				var lines = lineResults[i];
-////				if(!lines.FinishState){
-////					sunCount++;
-////					var pntInfo = lines.GetLineFrom();
-////					coord = trans.PT([pntInfo.Y, pntInfo.X]);
-////					var circle = L.circle(coord, { radius: 2, fillColor: "red",fillOpacity:1,stroke:false }).bindTooltip(pntInfo.X+"  "+pntInfo.Y);
-////					isolineLyr.addLayer(circle);
-////					txt += pntInfo.X+"  "+pntInfo.Y+"\r\n";
-////					pntInfo = lines.GetLineEnd();
-////					coord = trans.PT([pntInfo.Y, pntInfo.X]);
-////					circle = L.circle(coord, { radius: 2, fillColor: "red",fillOpacity:1,stroke:false }).bindTooltip(pntInfo.X+"  "+pntInfo.Y);
-////					isolineLyr.addLayer(circle);
-////					
-////					txt += pntInfo.X+"  "+pntInfo.Y+"\r\n";
-////					color = "red";
-////					weight = 2;
-////					continue;
-////				}
-//				var transLine = [];
-//				lines.ListVertrix.forEach(function(pt, k) {
-//					var coord = trans.PT([pt.Y, pt.X]);
-//					transLine.push(coord);
-//				})
-//				var polyg = L.polyline(transLine, { color: color,weight:weight });
-//				isolineLyr.addLayer(polyg);
-//
-//				var labelPnt = trans.PT([lines.Label.LabelPnt.Y, lines.Label.LabelPnt.X]);
-//				var marker = L.marker(labelPnt, {
-//					icon: L.divIcon({
-//						html: '<div style="font-size:14px;color:#FF0000">' + lines.Label.Value + '</div>'
-//					}),
-//				})
-//				isolineLyr.addLayer(marker);
-//			}
-			alert("0");
+			var sunCount = 0;
+			var txt = "";
+			var color = "black",weight = 1;
+			for(var i = 0; i < lineResults.length; i++) {
+				color = "black",weight = 1;
+				var lines = lineResults[i];
+				if(!lines.FinishState){
+					sunCount++;
+					var pntInfo = lines.GetLineFrom();
+					coord = trans.PT([pntInfo.Y, pntInfo.X]);
+					var circle = L.circle(coord, { radius: 2, fillColor: "red",fillOpacity:1,stroke:false }).bindTooltip(pntInfo.X+"  "+pntInfo.Y);
+					isolineLyr.addLayer(circle);
+					txt += pntInfo.X+"  "+pntInfo.Y+"\r\n";
+					pntInfo = lines.GetLineEnd();
+					coord = trans.PT([pntInfo.Y, pntInfo.X]);
+					circle = L.circle(coord, { radius: 2, fillColor: "red",fillOpacity:1,stroke:false }).bindTooltip(pntInfo.X+"  "+pntInfo.Y);
+					isolineLyr.addLayer(circle);
+					
+					txt += pntInfo.X+"  "+pntInfo.Y+"\r\n";
+					color = "red";
+					weight = 2;
+					continue;
+				}
+				var transLine = [];
+				lines.ListVertrix.forEach(function(pt, k) {
+					var coord = trans.PT([pt.Y, pt.X]);
+					transLine.push(coord);
+				})
+				var polyg = L.polyline(transLine, { color: color,weight:weight });
+				isolineLyr.addLayer(polyg);
+
+				var labelPnt = trans.PT([lines.Label.LabelPnt.Y, lines.Label.LabelPnt.X]);
+				var marker = L.marker(labelPnt, {
+					icon: L.divIcon({
+						html: '<div style="font-size:14px;color:#FF0000">' + lines.Label.Value + '</div>'
+					}),
+				})
+				isolineLyr.addLayer(marker);
+			}
+			alert(sunCount);
 			return isolineLyr;
 		};
 

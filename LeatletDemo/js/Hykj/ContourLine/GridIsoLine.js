@@ -35,7 +35,6 @@ var GridIsoline = {
 				}
 				tempIsolines.splice(0,tempIsolines.length);
 			}
-			
 			return listIsolines; 
 		};
 		
@@ -265,7 +264,7 @@ var GridIsoline = {
 						case "31":
 							ringId = "10" + listClass10.length.toString();
 							isoRing = new IsoRing(TransPntArrayToCoors(line.ListVertrix));
-							if(Math.abs(line.GetLineEnd().X - xMin) < 0.000001){  //第10类，差两个点，需要考虑添加的顺序
+							if(Math.abs(line.EndPnt.X - xMin) < 0.000001){  //第10类，差两个点，需要考虑添加的顺序 GetLineEnd()
 								isoRing.PushPoint([xMin,yMin]);
 								isoRing.PushPoint([xMax,yMin]);
 							}
@@ -291,7 +290,7 @@ var GridIsoline = {
 						case "42":
 							ringId = "11" + listClass11.length.toString();
 							isoRing = new IsoRing(TransPntArrayToCoors(line.ListVertrix));
-							if(Math.abs(line.GetLineEnd().Y - yMin) < 0.000001){  //第11类，差两个点，需要考虑添加的顺序
+							if(Math.abs(line.EndPnt.Y - yMin) < 0.000001){  //第11类，差两个点，需要考虑添加的顺序   GetLineEnd()
 								isoRing.PushPoint([xMin,yMin]);
 								isoRing.PushPoint([xMin,yMax]);
 							}
