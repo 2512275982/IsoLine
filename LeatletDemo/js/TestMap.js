@@ -1,13 +1,13 @@
 /*
  * 测试等值线生成程序
  */
-var map;
+//var map;
 var airData;
 var contourLine;
 var splitValues,splitColors,type;
 
-var initMap = function() {
-	map = L.map('map', {
+var initMap = function(mapId) {
+	var map = L.map(mapId, {
 		fullscreenControl: {
 			pseudoFullscreen: false
 		}
@@ -18,13 +18,14 @@ var initMap = function() {
 		layers.push(providers[providerId]);
 	}
 	var ctrl = L.control.iconLayers(layers).addTo(map);
+	
 	L.Control.boxzoom({ position: 'topleft' }).addTo(map);
 	L.control.defaultExtent().addTo(map);
 
-	$.getJSON("./js/Hykj/ContourLine/test.json", function(data) {
-		airData = data;
-	});
-	contourLine = ContourLine.createNew();
+//	$.getJSON("./js/Hykj/ContourLine/test.json", function(data) {
+//		airData = data;
+//	});
+//	contourLine = ContourLine.createNew();
 	//		getDataFromJson();
 };
 

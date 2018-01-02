@@ -94,7 +94,7 @@ IsoRing.prototype = {
 	},
 	//参数对象可以是一个，可以是两个。一个时传PointInfo对象，两个时传[x,y]坐标值
 	JudgePntInRing : function(){ 
-		 count = this.vertries.length;
+		var count = this.vertries.length;
 		if(count < 3){
 			return false;
 		}

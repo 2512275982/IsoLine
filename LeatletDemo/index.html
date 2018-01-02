@@ -35,7 +35,15 @@
 		<script src="js/TestMap.js" type="text/javascript" charset="utf-8"></script>
 		<style type="text/css">
 			#map {
-				height: 900px;
+				height: 500px;
+				width: 400px;
+			}
+			#map1 {
+				position:fixed; 
+				left:500px;
+				top:0;
+				height: 500px;
+				width:400px;
 			}
 			
 			.button {
@@ -155,6 +163,8 @@
 			<button class="button button6 " id="btn6 " onclick="showNO2() ">NO2</button>
 			
 		</div>
+		<div id="map1">			
+		</div>
 		<div>
 			<button id="CYD"  onclick="CYD()">采样点</button>
 			<button id="DZX" onclick="DZX()">等值线</button>
@@ -162,7 +172,8 @@
 		</div>
 	</body>
 	<script type="text/javascript ">
-		initMap();
+		initMap('map');
+		initMap('map1');
 		//		LeafletMap.InitMap();
 	</script>
 	 
